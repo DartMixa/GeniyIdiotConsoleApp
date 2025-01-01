@@ -8,30 +8,30 @@ namespace GeniyIdiotConsoleApp
     {
         static void Main(string[] args)
         {
-            bool replay = true;
+            var replay = true;
             while (replay)
             {
                 Console.WriteLine("Здравствуйте, как вас зовут?");
-                string? userName = Console.ReadLine();
-                int countQuestions = 5;
-                List<Tuple<string, int>> questions = GetQuestionsAndAnswers();
+                var userName = Console.ReadLine();
+                var countQuestions = 5;
+                var questions = GetQuestionsAndAnswers();
 
-                int countRightAnswers = 0;
+                var countRightAnswers = 0;
 
-                Random random = new Random();
+                var random = new Random();
 
 
 
-                for (int i = 0; i < countQuestions; i++)
+                for (var i = 0; i < countQuestions; i++)
                 {
                     Console.WriteLine("Вопрос №" + (i + 1));
 
-                    int randomQuestionIndex = random.Next(0, questions.Count);
+                    var randomQuestionIndex = random.Next(0, questions.Count);
                     Console.WriteLine(questions[randomQuestionIndex].Item1);
 
-                    int userAnswer = FoolproofAnswer();
+                    var userAnswer = FoolproofAnswer();
 
-                    int rightAnswer = questions[randomQuestionIndex].Item2;
+                    var rightAnswer = questions[randomQuestionIndex].Item2;
 
                     if (userAnswer == rightAnswer)
                     {
@@ -45,20 +45,20 @@ namespace GeniyIdiotConsoleApp
                 
                 Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnose(countRightAnswers, countQuestions));
 
-                StreamWriter sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt", true);
+                var sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt", true);
                 sw.WriteLine(userName + ";;;" + countRightAnswers + ";;;" + GetDiagnose(countRightAnswers, countQuestions));
                 sw.Close();
 
                 Console.WriteLine("Хотите пройти тест ещё раз введите: 1");
                 Console.WriteLine("Хотите просмотреть таблицу результатов введите: 2");
-                string userChoice = Console.ReadLine();
+                var userChoice = Console.ReadLine();
                 if (userChoice == "2") 
                 {
-                    StreamReader sr = new StreamReader(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt");
+                    var sr = new StreamReader(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt");
                     Console.WriteLine("{0, -20}{1, 20} \t {2}", "ФИО", "кол-во правильных ответ", "Диагноз");
                     while (true)
                     {
-                        string str = sr.ReadLine();
+                        var str = sr.ReadLine();
                         if (str != null)
                         {
                             Console.WriteLine("{0, -20}{1, 20} \t {2}", str.Split(";;;"));
@@ -80,7 +80,7 @@ namespace GeniyIdiotConsoleApp
         }
         static List<Tuple<string, int>> GetQuestionsAndAnswers()
         {
-            List<Tuple<string, int>> list = new List<Tuple<string, int>>
+           var list = new List<Tuple<string, int>>
             {
                 new("Сколько будет два плюс два умноженное на два?", 6),
                 new("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
@@ -93,8 +93,8 @@ namespace GeniyIdiotConsoleApp
 
         static string GetDiagnose(int countRightAnswers, int countQuestions)
         {
-            int nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 6m));
-            string[] diagnoses = new string[6];
+            var nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 6m));
+            var diagnoses = new string[6];
             diagnoses[0] = "кретин";
             diagnoses[1] = "идиот";
             diagnoses[2] = "дурак";
@@ -108,7 +108,7 @@ namespace GeniyIdiotConsoleApp
         {
             while (true) 
             {
-                bool isnom = int.TryParse(Console.ReadLine(), out var answer);
+                var isnom = int.TryParse(Console.ReadLine(), out var answer);
                 if (isnom)
                 {
                     return answer;

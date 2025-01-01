@@ -4,6 +4,51 @@ namespace GeniyIdiotConsoleApp
 {
     class Program
     {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Здравствуйте, как вас зовут?");
+            string? userName = Console.ReadLine();
+            while (true)
+            {
+                int countQuestions = 5;
+                List<Tuple<string, int>> questions = GetQuestionsAndAnswers();
+
+                int countRightAnswers = 0;
+
+                Random random = new Random();
+
+
+
+                for (int i = 0; i < countQuestions; i++)
+                {
+                    Console.WriteLine("Вопрос №" + (i + 1));
+
+                    int randomQuestionIndex = random.Next(0, questions.Count);
+                    Console.WriteLine(questions[randomQuestionIndex].Item1);
+
+                    int userAnswer = FoolproofAnswer();
+
+                    int rightAnswer = questions[randomQuestionIndex].Item2;
+
+                    if (userAnswer == rightAnswer)
+                    {
+                        countRightAnswers++;
+                    }
+                    questions.Remove(questions[randomQuestionIndex]);
+                }
+
+                Console.WriteLine("Количество правильных ответов: " + countRightAnswers);
+
+
+                Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnoses()[countRightAnswers]);
+
+                Console.WriteLine("Хотите пройти тест ещё раз?");
+                if (Console.ReadLine().ToLower() == "нет") 
+                {
+                    break;
+                }
+            }
+        }
         static List<Tuple<string, int>> GetQuestionsAndAnswers()
         {
             List<Tuple<string, int>> list = new List<Tuple<string, int>>
@@ -29,49 +74,18 @@ namespace GeniyIdiotConsoleApp
             return diagnoses;
         }
 
-        static void Main(string[] args)
+        static int FoolproofAnswer() 
         {
-            Console.WriteLine("Здравствуйте, как вас зовут?");
-            string? userName = Console.ReadLine();
-            while (true)
+            while (true) 
             {
-                int countQuestions = 5;
-                List<Tuple<string, int>> questions = GetQuestionsAndAnswers();
-
-                int countRightAnswers = 0;
-
-                Random random = new Random();
-
-
-
-                for (int i = 0; i < countQuestions; i++)
+                bool isnom = int.TryParse(Console.ReadLine(), out var answer);
+                if (isnom)
                 {
-                    Console.WriteLine("Вопрос №" + (i + 1));
-
-                    int randomQuestionIndex = random.Next(0, questions.Count);
-                    Console.WriteLine(randomQuestionIndex);
-                    Console.WriteLine(questions[randomQuestionIndex].Item1);
-
-                    int userAnswer = Convert.ToInt32(Console.ReadLine());
-
-                    int rightAnswer = questions[randomQuestionIndex].Item2;
-
-                    if (userAnswer == rightAnswer)
-                    {
-                        countRightAnswers++;
-                    }
-                    questions.Remove(questions[randomQuestionIndex]);
+                    return answer;
                 }
-
-                Console.WriteLine("Количество правильных ответов: " + countRightAnswers);
-
-
-                Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnoses()[countRightAnswers]);
-
-                Console.WriteLine("Хотите пройти тест ещё раз?");
-                if (Console.ReadLine().ToLower() == "нет") 
+                else 
                 {
-                    break;
+                    Console.WriteLine("Пожалуйста, введите число!");
                 }
             }
         }

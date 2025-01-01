@@ -55,12 +55,13 @@ namespace GeniyIdiotConsoleApp
                 if (userChoice == "2") 
                 {
                     StreamReader sr = new StreamReader(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt");
+                    Console.WriteLine("{0, -20}{1, 20} \t {2}", "ФИО", "кол-во правильных ответ", "Диагноз");
                     while (true)
                     {
                         string str = sr.ReadLine();
                         if (str != null)
                         {
-                            Console.WriteLine("{0, -20}{1, 20}\t{2}", str.Split(";;;"));
+                            Console.WriteLine("{0, -20}{1, 20} \t {2}", str.Split(";;;"));
                         }
                         else
                         {

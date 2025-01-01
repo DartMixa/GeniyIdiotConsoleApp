@@ -4,28 +4,20 @@ namespace GeniyIdiotConsoleApp
 {
     class Program
     {
-        static string[] GetQuestions(int countQuestions)
+        static List<Tuple<string, int>> GetQuestionsAndAnswers()
         {
-            string[] questions = new string[countQuestions];
-            questions[0] = "Сколько будет два плюс два умноженное на два?";
-            questions[1] = "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?";
-            questions[2] = "На двух руках 10 пальцев. Сколько пальцев на 5 руках?";
-            questions[3] = "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?";
-            questions[4] = "Пять свечей горело, две потухли. Сколько свечей осталось?";
-            return questions;
-        }
-        static int[] GetAnswers(int countAnswers) 
-        {
-            int[] answers = new int[countAnswers];
-            answers[0] = 6;
-            answers[1] = 9;
-            answers[2] = 25;
-            answers[3] = 60;
-            answers[4] = 2;
-            return answers;
+            List<Tuple<string, int>> list = new List<Tuple<string, int>>
+            {
+                new("Сколько будет два плюс два умноженное на два?", 6),
+                new("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
+                new("На двух руках 10 пальцев. Сколько пальцев на 5 руках?", 25),
+                new("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
+                new("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
+            };
+            return list;
         }
 
-        static string[] GetDiagnoses() 
+        static string[] GetDiagnoses()
         {
             string[] diagnoses = new string[6];
             diagnoses[0] = "кретин";
@@ -40,8 +32,7 @@ namespace GeniyIdiotConsoleApp
         static void Main(string[] args)
         {
             int countQuestions = 5;
-            string[] questions = GetQuestions(countQuestions);
-            int[] answers = GetAnswers(countQuestions);
+            List<Tuple<string, int>> questions = GetQuestionsAndAnswers();
 
             int countRightAnswers = 0;
 
@@ -51,17 +42,19 @@ namespace GeniyIdiotConsoleApp
             {
                 Console.WriteLine("Вопрос №" + (i + 1));
 
-                int randomQuestionIndex = random.Next(0, countQuestions);
-                Console.WriteLine(questions[randomQuestionIndex]);
+                int randomQuestionIndex = random.Next(0, questions.Count);
+                Console.WriteLine(randomQuestionIndex);
+                Console.WriteLine(questions[randomQuestionIndex].Item1);
 
                 int userAnswer = Convert.ToInt32(Console.ReadLine());
 
-                int rightAnswer = answers[randomQuestionIndex];
+                int rightAnswer = questions[randomQuestionIndex].Item2;
 
                 if (userAnswer == rightAnswer)
                 {
                     countRightAnswers++;
                 }
+                questions.Remove(questions[randomQuestionIndex]);
             }
 
             Console.WriteLine("Количество правильных ответов: " + countRightAnswers);

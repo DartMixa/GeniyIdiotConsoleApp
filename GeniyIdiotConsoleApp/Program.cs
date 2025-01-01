@@ -38,6 +38,9 @@ namespace GeniyIdiotConsoleApp
 
             Random random = new Random();
 
+            Console.WriteLine("Здравствуйте, как вас зовут?");
+            string? userName = Console.ReadLine();
+
             for (int i = 0; i < countQuestions; i++)
             {
                 Console.WriteLine("Вопрос №" + (i + 1));
@@ -60,7 +63,7 @@ namespace GeniyIdiotConsoleApp
             Console.WriteLine("Количество правильных ответов: " + countRightAnswers);
 
             
-            Console.WriteLine("Ваш диагноз:" + GetDiagnoses()[countRightAnswers]);
+            Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnoses()[countRightAnswers]);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GeniyIdiotConsoleApp
 {
@@ -6,10 +8,11 @@ namespace GeniyIdiotConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Здравствуйте, как вас зовут?");
-            string? userName = Console.ReadLine();
-            while (true)
+            bool replay = true;
+            while (replay)
             {
+                Console.WriteLine("Здравствуйте, как вас зовут?");
+                string? userName = Console.ReadLine();
                 int countQuestions = 5;
                 List<Tuple<string, int>> questions = GetQuestionsAndAnswers();
 
@@ -42,10 +45,35 @@ namespace GeniyIdiotConsoleApp
                 
                 Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnose(countRightAnswers, countQuestions));
 
-                Console.WriteLine("Хотите пройти тест ещё раз?");
-                if (Console.ReadLine().ToLower() == "нет") 
+                StreamWriter sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt", true);
+                sw.WriteLine(userName + ";;;" + countRightAnswers + ";;;" + GetDiagnose(countRightAnswers, countQuestions));
+                sw.Close();
+
+                Console.WriteLine("Хотите пройти тест ещё раз введите: 1");
+                Console.WriteLine("Хотите просмотреть таблицу результатов введите: 2");
+                string userChoice = Console.ReadLine();
+                if (userChoice == "2") 
                 {
-                    break;
+                    StreamReader sr = new StreamReader(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt");
+                    while (true)
+                    {
+                        string str = sr.ReadLine();
+                        if (str != null)
+                        {
+                            Console.WriteLine("{0, -20}{1, 20}\t{2}", str.Split(";;;"));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    sr.Close();
+                    Console.WriteLine("Хотите пройти тест ещё раз введите: 1");
+                    userChoice = Console.ReadLine();
+                }
+                if (userChoice != "1")
+                {
+                    replay = false;
                 }
             }
         }

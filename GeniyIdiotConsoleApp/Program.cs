@@ -39,8 +39,8 @@ namespace GeniyIdiotConsoleApp
 
                 Console.WriteLine("Количество правильных ответов: " + countRightAnswers);
 
-
-                Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnoses()[countRightAnswers]);
+                
+                Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnose(countRightAnswers, countQuestions));
 
                 Console.WriteLine("Хотите пройти тест ещё раз?");
                 if (Console.ReadLine().ToLower() == "нет") 
@@ -62,8 +62,9 @@ namespace GeniyIdiotConsoleApp
             return list;
         }
 
-        static string[] GetDiagnoses()
+        static string GetDiagnose(int countRightAnswers, int countQuestions)
         {
+            int nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 6m));
             string[] diagnoses = new string[6];
             diagnoses[0] = "кретин";
             diagnoses[1] = "идиот";
@@ -71,7 +72,7 @@ namespace GeniyIdiotConsoleApp
             diagnoses[3] = "нормальный";
             diagnoses[4] = "талант";
             diagnoses[5] = "гений";
-            return diagnoses;
+            return diagnoses[countRightAnswers];
         }
 
         static int FoolproofAnswer() 

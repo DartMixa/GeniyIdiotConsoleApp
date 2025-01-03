@@ -27,11 +27,11 @@ namespace GeniyIdiotConsoleApp
                     Console.WriteLine("Вопрос №" + (i + 1));
 
                     var randomQuestionIndex = random.Next(0, questions.Count);
-                    Console.WriteLine(questions[randomQuestionIndex].Item1);
+                    Console.WriteLine(questions[randomQuestionIndex].question);
 
                     var userAnswer = FoolproofAnswer();
 
-                    var rightAnswer = questions[randomQuestionIndex].Item2;
+                    var rightAnswer = questions[randomQuestionIndex].answer;
 
                     if (userAnswer == rightAnswer)
                     {
@@ -78,9 +78,9 @@ namespace GeniyIdiotConsoleApp
                 }
             }
         }
-        static List<Tuple<string, int>> GetQuestionsAndAnswers()
+        static List<Question> GetQuestionsAndAnswers()
         {
-           var list = new List<Tuple<string, int>>
+           var list = new List<Question>
             {
                 new("Сколько будет два плюс два умноженное на два?", 6),
                 new("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),

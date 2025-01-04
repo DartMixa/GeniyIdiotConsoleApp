@@ -13,40 +13,35 @@ namespace GeniyIdiotConsoleApp
             {
                 Console.WriteLine("Здравствуйте, как вас зовут?");
                 var userName = Console.ReadLine();
-                var countQuestions = 5;
-                var questions = GetQuestionsAndAnswers();
+
+                var questions = GetQuestions();
 
                 var countRightAnswers = 0;
 
-                var random = new Random();
-
-
-
-                for (var i = 0; i < countQuestions; i++)
+                int i = 0;
+                foreach(var question in questions)
                 {
-                    Console.WriteLine("Вопрос №" + (i + 1));
+                    i++;
+                    Console.WriteLine("Вопрос №" + i);
 
-                    var randomQuestionIndex = random.Next(0, questions.Count);
-                    Console.WriteLine(questions[randomQuestionIndex].question);
+                    Console.WriteLine(question.question);
 
                     var userAnswer = FoolproofAnswer();
 
-                    var rightAnswer = questions[randomQuestionIndex].answer;
+                    var rightAnswer = question.answer;
 
                     if (userAnswer == rightAnswer)
                     {
                         countRightAnswers++;
                     }
-                    questions.Remove(questions[randomQuestionIndex]);
                 }
 
                 Console.WriteLine("Количество правильных ответов: " + countRightAnswers);
-
                 
-                Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnose(countRightAnswers, countQuestions));
+                Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnose(countRightAnswers, questions.CountQuestions));
 
                 var sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt", true);
-                sw.WriteLine(userName + ";;;" + countRightAnswers + ";;;" + GetDiagnose(countRightAnswers, countQuestions));
+                sw.WriteLine(userName + ";;;" + countRightAnswers + ";;;" + GetDiagnose(countRightAnswers, questions.CountQuestions));
                 sw.Close();
 
                 Console.WriteLine("Хотите пройти тест ещё раз введите: 1");
@@ -78,16 +73,14 @@ namespace GeniyIdiotConsoleApp
                 }
             }
         }
-        static List<Question> GetQuestionsAndAnswers()
+        static QuestionsStorage GetQuestions()
         {
-           var list = new List<Question>
-            {
-                new("Сколько будет два плюс два умноженное на два?", 6),
+            var list = new QuestionsStorage(
+                [new("Сколько будет два плюс два умноженное на два?", 6),
                 new("Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?", 9),
                 new("На двух руках 10 пальцев. Сколько пальцев на 5 руках?", 25),
                 new("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
-                new("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
-            };
+                new("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)]);
             return list;
         }
 
@@ -108,8 +101,7 @@ namespace GeniyIdiotConsoleApp
         {
             while (true) 
             {
-                var isnom = int.TryParse(Console.ReadLine(), out var answer);
-                if (isnom)
+                if (int.TryParse(Console.ReadLine(), out var answer))
                 {
                     return answer;
                 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeniyIdiotConsoleApp
 {
-    internal class Question
+    public class Question
     {
         public readonly string question;
         public readonly int answer;

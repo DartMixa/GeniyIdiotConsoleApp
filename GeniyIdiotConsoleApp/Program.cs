@@ -12,11 +12,11 @@ namespace GeniyIdiotConsoleApp
             while (replay)
             {
                 Console.WriteLine("Здравствуйте, как вас зовут?");
-                var userName = Console.ReadLine();
+                var user = new User(Console.ReadLine());
+
+                Diagnose diagnose = new Diagnose();
 
                 var questions = GetQuestions();
-
-                var countRightAnswers = 0;
 
                 int i = 0;
                 foreach(var question in questions)
@@ -32,16 +32,18 @@ namespace GeniyIdiotConsoleApp
 
                     if (userAnswer == rightAnswer)
                     {
-                        countRightAnswers++;
+                        diagnose.countRightAnswers++;
                     }
                 }
 
-                Console.WriteLine("Количество правильных ответов: " + countRightAnswers);
+                diagnose.diagnose = GetDiagnose(diagnose.countRightAnswers, questions.CountQuestions);
+
+                Console.WriteLine("Количество правильных ответов: " + diagnose.countRightAnswers);
                 
-                Console.WriteLine(userName + ", ваш диагноз:" + GetDiagnose(countRightAnswers, questions.CountQuestions));
+                Console.WriteLine(user.Name + ", ваш диагноз: " + diagnose.diagnose);
 
                 var sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt", true);
-                sw.WriteLine(userName + ";;;" + countRightAnswers + ";;;" + GetDiagnose(countRightAnswers, questions.CountQuestions));
+                sw.WriteLine(user.Name + ";;;" + diagnose.countRightAnswers + ";;;" + diagnose.diagnose);
                 sw.Close();
 
                 Console.WriteLine("Хотите пройти тест ещё раз введите: 1");

@@ -10,5 +10,11 @@ namespace GeniyIdiotConsoleApp
     {
         public int countRightAnswers = 0;
         public string diagnose = "";
+        public Diagnose() { }
+        public Diagnose(int countRightAnswers, string diagnose)
+        { 
+            this.countRightAnswers = countRightAnswers;
+            this.diagnose = diagnose;
+        }
     }
 }

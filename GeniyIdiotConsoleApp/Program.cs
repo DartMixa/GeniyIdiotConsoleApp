@@ -6,72 +6,27 @@ namespace GeniyIdiotConsoleApp
 {
     class Program
     {
+        static UsersResultStorage usersResultStorage = new();
         static void Main(string[] args)
         {
+            usersResultStorage.Load();
+
+            var user = Authorization();
+
             var replay = true;
             while (replay)
             {
-                Console.WriteLine("Здравствуйте, как вас зовут?");
-                var user = new User(Console.ReadLine());
-
-                Diagnose diagnose = new Diagnose();
-
-                var questions = GetQuestions();
-
-                int i = 0;
-                foreach(var question in questions)
-                {
-                    i++;
-                    Console.WriteLine("Вопрос №" + i);
-
-                    Console.WriteLine(question.question);
-
-                    var userAnswer = FoolproofAnswer();
-
-                    var rightAnswer = question.answer;
-
-                    if (userAnswer == rightAnswer)
-                    {
-                        diagnose.countRightAnswers++;
-                    }
-                }
-
-                diagnose.diagnose = GetDiagnose(diagnose.countRightAnswers, questions.CountQuestions);
-
-                Console.WriteLine("Количество правильных ответов: " + diagnose.countRightAnswers);
-                
-                Console.WriteLine(user.Name + ", ваш диагноз: " + diagnose.diagnose);
-
-                var sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt", true);
-                sw.WriteLine(user.Name + ";;;" + diagnose.countRightAnswers + ";;;" + diagnose.diagnose);
-                sw.Close();
-
-                Console.WriteLine("Хотите пройти тест ещё раз введите: 1");
-                Console.WriteLine("Хотите просмотреть таблицу результатов введите: 2");
+                Console.WriteLine("Введите 1 если хотите выйти из игры");
+                Console.WriteLine("Введите 2 если хотите просмотреть таблицу результатов");
+                Console.WriteLine("Введите 3 если хотите сменить аккаунт");
+                Console.WriteLine("Введите 4 если хотите играть");
                 var userChoice = Console.ReadLine();
-                if (userChoice == "2") 
+                switch (userChoice)
                 {
-                    var sr = new StreamReader(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt");
-                    Console.WriteLine("{0, -20}{1, 20} \t {2}", "ФИО", "кол-во правильных ответ", "Диагноз");
-                    while (true)
-                    {
-                        var str = sr.ReadLine();
-                        if (str != null)
-                        {
-                            Console.WriteLine("{0, -20}{1, 20} \t {2}", str.Split(";;;"));
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    sr.Close();
-                    Console.WriteLine("Хотите пройти тест ещё раз введите: 1");
-                    userChoice = Console.ReadLine();
-                }
-                if (userChoice != "1")
-                {
-                    replay = false;
+                    case "1": replay = false; break;
+                    case "2": usersResultStorage.PrintTable(); break;
+                    case "3": user = Authorization(); break;
+                    case "4": Game(user); break;
                 }
             }
         }
@@ -85,7 +40,6 @@ namespace GeniyIdiotConsoleApp
                 new("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)]);
             return list;
         }
-
         static string GetDiagnose(int countRightAnswers, int countQuestions)
         {
             var nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 6m));
@@ -98,7 +52,6 @@ namespace GeniyIdiotConsoleApp
             diagnoses[5] = "гений";
             return diagnoses[countRightAnswers];
         }
-
         static int FoolproofAnswer() 
         {
             while (true) 
@@ -112,6 +65,44 @@ namespace GeniyIdiotConsoleApp
                     Console.WriteLine("Пожалуйста, введите число!");
                 }
             }
+        }
+        static User Authorization() 
+        {
+            Console.WriteLine("Здравствуйте, как вас зовут?");
+            return new User(Console.ReadLine());
+        }
+        static void Game(User user) 
+        {
+            Diagnose diagnose = new Diagnose();
+
+            var questions = GetQuestions();
+
+            int i = 0;
+            foreach (var question in questions)
+            {
+                i++;
+                Console.WriteLine("Вопрос №" + i);
+
+                Console.WriteLine(question.question);
+
+                var userAnswer = FoolproofAnswer();
+
+                var rightAnswer = question.answer;
+
+                if (userAnswer == rightAnswer)
+                {
+                    diagnose.countRightAnswers++;
+                }
+            }
+
+            diagnose.diagnose = GetDiagnose(diagnose.countRightAnswers, questions.CountQuestions);
+
+            Console.WriteLine("Количество правильных ответов: " + diagnose.countRightAnswers);
+
+            Console.WriteLine(user.Name + ", ваш диагноз: " + diagnose.diagnose);
+
+            usersResultStorage.AddDiagnose(user, diagnose);
+            usersResultStorage.Save();
         }
     }
 }

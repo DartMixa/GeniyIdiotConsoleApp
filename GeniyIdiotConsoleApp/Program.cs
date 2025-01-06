@@ -22,6 +22,7 @@ namespace GeniyIdiotConsoleApp
                 Console.WriteLine("Введите 2 если хотите просмотреть таблицу результатов");
                 Console.WriteLine("Введите 3 если хотите сменить аккаунт");
                 Console.WriteLine("Введите 4 если хотите играть");
+                Console.WriteLine("Введите 5 если хотите добавить вопрос");
                 var userChoice = Console.ReadLine();
                 switch (userChoice)
                 {
@@ -29,12 +30,14 @@ namespace GeniyIdiotConsoleApp
                     case "2": usersResultStorage.PrintTable(); break;
                     case "3": user = Authorization(); break;
                     case "4": Game(user); break;
+                    case "5": AddQuestion(); break;
                 }
             }
         }
         static string GetDiagnose(int countRightAnswers, int countQuestions)
         {
-            var nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 6m));
+            var nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 5m));
+            Console.WriteLine(nom + "" + countRightAnswers + "" + countQuestions);
             var diagnoses = new string[6];
             diagnoses[0] = "кретин";
             diagnoses[1] = "идиот";
@@ -42,7 +45,7 @@ namespace GeniyIdiotConsoleApp
             diagnoses[3] = "нормальный";
             diagnoses[4] = "талант";
             diagnoses[5] = "гений";
-            return diagnoses[countRightAnswers];
+            return diagnoses[nom];
         }
         static int FoolproofAnswer() 
         {
@@ -93,6 +96,14 @@ namespace GeniyIdiotConsoleApp
 
             usersResultStorage.AddDiagnose(user, diagnose);
             usersResultStorage.Save();
+        }
+        static void AddQuestion() 
+        {
+            Console.WriteLine("Введите текст вопроса");
+            var textQuestion = Console.ReadLine();
+            Console.WriteLine("Введите ответ (целое число)");
+            var answer = FoolproofAnswer();
+            questions.Add(new(textQuestion, answer));
         }
     }
 }

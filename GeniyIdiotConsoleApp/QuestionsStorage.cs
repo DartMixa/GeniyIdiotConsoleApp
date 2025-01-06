@@ -12,7 +12,7 @@ namespace GeniyIdiotConsoleApp
     {
         private List<Question> Questions { get; set; } = [];
         private List<Question> TemporaryQuestionList { get; set; } = [];
-        public int CountQuestions { get; set; } = 0;
+        public int CountQuestions => Questions.Count;
 
         private readonly Random random = new();
         public Question Next
@@ -69,7 +69,6 @@ namespace GeniyIdiotConsoleApp
 
         public QuestionsStorage(List<Question> questions) 
         {
-            CountQuestions = questions.Count;
             Questions = questions;
         }
 
@@ -83,6 +82,7 @@ namespace GeniyIdiotConsoleApp
         public void Add(Question question) 
         {
             Questions.Add(question);
+            Save();
         }
 
         public IEnumerator<Question> GetEnumerator()

@@ -39,33 +39,27 @@ namespace GeniyIdiotConsoleApp
         }
         public void Save()
         {
-            var sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt");
+            string txt = "";
             foreach (var item in storage)
             {
                 foreach (var diagnose in item.Value)
                 {
-                    sw.WriteLine("{0};;;{1};;;{2}", item.Key.Name, diagnose.countRightAnswers, diagnose.diagnose);
+                    txt += string.Format("{0};;;{1};;;{2}\n", item.Key.Name, diagnose.countRightAnswers, diagnose.diagnose);
                 }
             }
-            sw.Close();
+            FileSystem.WriteFile("results", txt);
         }
         public void Load()
         {
-            var sr = new StreamReader(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/results.txt");
-            while (true)
+            var txt = (FileSystem.ReadFile("results").Split("\n"));
+            foreach (var item in txt)
             {
-                var str = sr.ReadLine();
-                if (str != null)
+                var strSplit = item.Split(";;;");
+                if (item != null && item.Length != 0)
                 {
-                    var strSplit = str.Split(";;;");
                     AddDiagnose(new(strSplit[0]), new(Convert.ToInt32(strSplit[1]), new(strSplit[2])));
                 }
-                else
-                {
-                    break;
-                }
             }
-            sr.Close();
         }
     }
 }

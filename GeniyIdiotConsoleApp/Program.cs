@@ -23,6 +23,7 @@ namespace GeniyIdiotConsoleApp
                 Console.WriteLine("Введите 3 если хотите сменить аккаунт");
                 Console.WriteLine("Введите 4 если хотите играть");
                 Console.WriteLine("Введите 5 если хотите добавить вопрос");
+                Console.WriteLine("Введите 6 если хотите удалить вопрос");
                 var userChoice = Console.ReadLine();
                 switch (userChoice)
                 {
@@ -31,6 +32,7 @@ namespace GeniyIdiotConsoleApp
                     case "3": user = Authorization(); break;
                     case "4": Game(user); break;
                     case "5": AddQuestion(); break;
+                    case "6": RemoveQuestion(); break;
                 }
             }
         }
@@ -97,13 +99,33 @@ namespace GeniyIdiotConsoleApp
             usersResultStorage.AddDiagnose(user, diagnose);
             usersResultStorage.Save();
         }
-        static void AddQuestion() 
+        static void AddQuestion()
         {
             Console.WriteLine("Введите текст вопроса");
             var textQuestion = Console.ReadLine();
             Console.WriteLine("Введите ответ (целое число)");
             var answer = FoolproofAnswer();
             questions.Add(new(textQuestion, answer));
+        }
+        static void RemoveQuestion() 
+        {
+            int i = 0;
+            foreach (var question in questions.Questions)
+            {
+                i++;
+                Console.WriteLine(i + ": " + question.question);
+            }
+            Console.WriteLine("Напишите номер вопроса который хотите удалить");
+            string userChoice = Console.ReadLine();
+            if (int.TryParse(userChoice, out int number) && number >= 0 && number <= i)
+            {
+                questions.Questions.RemoveAt(number - 1);
+                questions.Save();
+            }
+            else
+            {
+                Console.WriteLine($"Не удалось удалить вопрос с номером {userChoice}");
+            }
         }
     }
 }

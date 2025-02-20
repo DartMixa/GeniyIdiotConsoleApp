@@ -36,7 +36,7 @@ namespace GeniyIdiotConsoleApp
             {
                 List<Question> questions = [];
 
-                var txt = FileSystem.ReadFile("questions").Split("\n");
+                var txt = FileSystem.ReadFile("questions.txt").Split("\n");
 
                 foreach (var item in txt)
                 {
@@ -49,8 +49,8 @@ namespace GeniyIdiotConsoleApp
 
                 return new QuestionsStorage(questions);
             }
-            catch (System.IO.FileNotFoundException) 
-            {
+            catch (System.IO.FileNotFoundException)
+			{
                 QuestionsStorage qe = GetQuestions();
                 qe.Save();
                 return qe;
@@ -64,7 +64,7 @@ namespace GeniyIdiotConsoleApp
             {
                 txt += string.Format("{0};;;{1}\n", question.question, Convert.ToString(question.answer));
             }
-            FileSystem.WriteFile("questions", txt);
+            FileSystem.WriteFile("questions.txt", txt);
         }
 
         public QuestionsStorage(List<Question> questions) 

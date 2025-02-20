@@ -11,14 +11,14 @@ namespace GeniyIdiotConsoleApp
     {
         static public string ReadFile(string fileName)
         {
-            var sr = new StreamReader(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/" + fileName + ".txt");
+            var sr = new StreamReader(fileName);
             var txt = sr.ReadToEnd();
             sr.Close();
             return txt;
         }
         static public void WriteFile(string fileName, string txt)
         {
-            var sw = new StreamWriter(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/" + fileName + ".txt");
+            var sw = new StreamWriter(fileName);
             sw.Write(txt);
             sw.Close();
         }

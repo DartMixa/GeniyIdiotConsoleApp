@@ -51,15 +51,22 @@ namespace GeniyIdiotConsoleApp
         }
         public void Load()
         {
-            var txt = (FileSystem.ReadFile("results").Split("\n"));
-            foreach (var item in txt)
+            try
             {
-                var strSplit = item.Split(";;;");
-                if (item != null && item.Length != 0)
+                var txt = (FileSystem.ReadFile("results").Split("\n"));
+                foreach (var item in txt)
                 {
-                    AddDiagnose(new(strSplit[0]), new(Convert.ToInt32(strSplit[1]), new(strSplit[2])));
+                    var strSplit = item.Split(";;;");
+                    if (item != null && item.Length != 0)
+                    {
+                        AddDiagnose(new(strSplit[0]), new(Convert.ToInt32(strSplit[1]), new(strSplit[2])));
+                    }
                 }
             }
-        }
+            catch (System.IO.FileNotFoundException)
+            {
+                FileSystem.WriteFile("results", "");
+			}
+		}
     }
 }

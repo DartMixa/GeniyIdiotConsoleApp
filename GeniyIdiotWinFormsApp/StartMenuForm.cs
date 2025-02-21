@@ -1,10 +1,17 @@
 namespace GeniyIdiotWinFormsApp
 {
-	public partial class Form1 : Form
+	public partial class StartMenuForm : Form
 	{
-		public Form1()
+
+		public StartMenuForm()
 		{
 			InitializeComponent();
+		}
+
+		private void ResultsTableButton_Click(object sender, EventArgs e)
+		{
+			ResultsTableForm resultsTableForm = new();
+			resultsTableForm.Show();
 		}
 	}
 }

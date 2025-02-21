@@ -1,6 +1,6 @@
 ﻿namespace GeniyIdiotWinFormsApp
 {
-	partial class Form1
+	partial class StartMenuForm
 	{
 		/// <summary>
 		///  Required designer variable.
@@ -28,31 +28,32 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			Button = new Button();
+			ResultsTableButton = new Button();
 			SuspendLayout();
 			// 
-			// Button
+			// ResultsTableButton
 			// 
-			Button.Location = new Point(97, 57);
-			Button.Name = "Button";
-			Button.Size = new Size(75, 23);
-			Button.TabIndex = 0;
-			Button.Text = "button1";
-			Button.UseVisualStyleBackColor = true;
+			ResultsTableButton.Location = new Point(74, 62);
+			ResultsTableButton.Name = "ResultsTableButton";
+			ResultsTableButton.Size = new Size(132, 50);
+			ResultsTableButton.TabIndex = 0;
+			ResultsTableButton.Text = "Табица результатов";
+			ResultsTableButton.UseVisualStyleBackColor = true;
+			ResultsTableButton.Click += ResultsTableButton_Click;
 			// 
-			// Form1
+			// StartMenuForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 450);
-			Controls.Add(Button);
-			Name = "Form1";
-			Text = "Form1";
+			Controls.Add(ResultsTableButton);
+			Name = "StartMenuForm";
+			Text = "Гений и идиот";
 			ResumeLayout(false);
 		}
 
 		#endregion
 
-		private Button Button;
+		private Button ResultsTableButton;
 	}
 }

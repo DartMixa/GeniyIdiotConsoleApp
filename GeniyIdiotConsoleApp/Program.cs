@@ -28,7 +28,7 @@ namespace GeniyIdiotConsoleApp
                 switch (userChoice)
                 {
                     case "1": replay = false; break;
-                    case "2": usersResultStorage.PrintTable(); break;
+                    case "2": PrintResultsTable(); break;
                     case "3": user = Authorization(); break;
                     case "4": Game(user); break;
                     case "5": AddQuestion(); break;
@@ -36,6 +36,14 @@ namespace GeniyIdiotConsoleApp
                 }
             }
         }
+        static void PrintResultsTable()
+        {
+			Console.WriteLine("{0, -20}{1, 20} \t {2}", "ФИО", "кол-во правильных ответов", "Диагноз");
+            foreach (var item in usersResultStorage.GetResults())
+            {
+				Console.WriteLine("{0, -20}{1, 20} \t {2}", item[0], item[1], item[2]);
+			}
+		}
         static string GetDiagnose(int countRightAnswers, int countQuestions)
         {
             var nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 5m));
@@ -49,7 +57,7 @@ namespace GeniyIdiotConsoleApp
             diagnoses[5] = "гений";
             return diagnoses[nom];
         }
-        static int FoolproofAnswer() 
+        static int GetAnswer()
         {
             while (true) 
             {
@@ -63,7 +71,7 @@ namespace GeniyIdiotConsoleApp
                 }
             }
         }
-        static User Authorization() 
+        static User Authorization()
         {
             Console.WriteLine("Здравствуйте, как вас зовут?");
             return new User(Console.ReadLine());
@@ -80,7 +88,7 @@ namespace GeniyIdiotConsoleApp
 
                 Console.WriteLine(question.question);
 
-                var userAnswer = FoolproofAnswer();
+                var userAnswer = GetAnswer();
 
                 var rightAnswer = question.answer;
 
@@ -104,7 +112,7 @@ namespace GeniyIdiotConsoleApp
             Console.WriteLine("Введите текст вопроса");
             var textQuestion = Console.ReadLine();
             Console.WriteLine("Введите ответ (целое число)");
-            var answer = FoolproofAnswer();
+            var answer = GetAnswer();
             questions.Add(new(textQuestion, answer));
         }
         static void RemoveQuestion() 

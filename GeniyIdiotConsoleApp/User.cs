@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GeniyIdiotConsoleApp
 {
-    internal class User
+    public class User
     {
         public string Name { get; set; }
         public User(string name) 

@@ -24,6 +24,10 @@ namespace GeniyIdiotWinFormsApp
             {
                 loginButton.Enabled = true;
             }
+            else 
+            {
+                loginButton.Enabled = false;
+            }
         }
 
         private void loginButton_Click(object sender, EventArgs e)

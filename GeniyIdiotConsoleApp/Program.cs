@@ -44,19 +44,6 @@ namespace GeniyIdiotConsoleApp
 				Console.WriteLine("{0, -20}{1, 20} \t {2}", item[0], item[1], item[2]);
 			}
 		}
-        static string GetDiagnose(int countRightAnswers, int countQuestions)
-        {
-            var nom = Convert.ToInt32(Math.Round((decimal)countRightAnswers / (decimal)countQuestions * 5m));
-            Console.WriteLine(nom + "" + countRightAnswers + "" + countQuestions);
-            var diagnoses = new string[6];
-            diagnoses[0] = "кретин";
-            diagnoses[1] = "идиот";
-            diagnoses[2] = "дурак";
-            diagnoses[3] = "нормальный";
-            diagnoses[4] = "талант";
-            diagnoses[5] = "гений";
-            return diagnoses[nom];
-        }
         static int GetAnswer()
         {
             while (true) 
@@ -98,7 +85,7 @@ namespace GeniyIdiotConsoleApp
                 }
             }
 
-            diagnose.diagnose = GetDiagnose(diagnose.countRightAnswers, questions.CountQuestions);
+            diagnose.diagnose = DiagnoseCalculator.GetDiagnose(diagnose.countRightAnswers, questions.CountQuestions);
 
             Console.WriteLine("Количество правильных ответов: " + diagnose.countRightAnswers);
 

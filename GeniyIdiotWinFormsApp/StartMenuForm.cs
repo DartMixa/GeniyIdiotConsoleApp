@@ -6,15 +6,19 @@ namespace GeniyIdiotWinFormsApp
     public partial class StartMenuForm : Form
     {
         static UsersResultStorage usersResultStorage = new();
-        ResultsTableForm resultsTableForm;
+        QuestionsStorage questionsStorage;
         User user;
+
+        ResultsTableForm resultsTableForm;
+        GameForm gameForm;
+
         User User
         {
             get
             {
                 return user;
             }
-            set 
+            set
             {
                 user = value;
                 userNameLable.Text = "Пользователь: " + value.Name;
@@ -25,6 +29,7 @@ namespace GeniyIdiotWinFormsApp
         {
             InitializeComponent();
             usersResultStorage.Load();
+            questionsStorage = QuestionsStorage.Load();
             Authorization("noname");
         }
 
@@ -42,9 +47,26 @@ namespace GeniyIdiotWinFormsApp
             registrationForm.LogIn += Authorization;
             registrationForm.ShowDialog();
         }
-        private void Authorization(string name) 
+        private void Authorization(string name)
         {
             User = new User(name);
+        }
+
+        private void StartGameButton_Click(object sender, EventArgs e)
+        {
+            gameForm?.Dispose();
+            gameForm = new(questionsStorage);
+            gameForm.FinishGame += FinishGame;
+            gameForm.Show();
+            Hide();
+        }
+        private void FinishGame(int result) 
+        {
+            Show();
+            string diagnose = DiagnoseCalculator.GetDiagnose(result, questionsStorage.Questions.Count());
+            usersResultStorage.AddDiagnose(user, new Diagnose(result, diagnose));
+            usersResultStorage.Save();
+            resultsTableForm?.UpdateTable(usersResultStorage.GetResults());
         }
     }
 }

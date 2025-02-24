@@ -31,13 +31,15 @@
             ResultsTableButton = new Button();
             registrationButton = new Button();
             userNameLable = new Label();
+            StartGameButton = new Button();
             SuspendLayout();
             // 
             // ResultsTableButton
             // 
-            ResultsTableButton.Location = new Point(74, 62);
+            ResultsTableButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ResultsTableButton.Location = new Point(43, 73);
             ResultsTableButton.Name = "ResultsTableButton";
-            ResultsTableButton.Size = new Size(132, 50);
+            ResultsTableButton.Size = new Size(174, 85);
             ResultsTableButton.TabIndex = 0;
             ResultsTableButton.Text = "Табица результатов";
             ResultsTableButton.UseVisualStyleBackColor = true;
@@ -45,9 +47,10 @@
             // 
             // registrationButton
             // 
-            registrationButton.Location = new Point(254, 62);
+            registrationButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            registrationButton.Location = new Point(255, 73);
             registrationButton.Name = "registrationButton";
-            registrationButton.Size = new Size(132, 50);
+            registrationButton.Size = new Size(174, 85);
             registrationButton.TabIndex = 1;
             registrationButton.Text = "Сменить Имя";
             registrationButton.UseVisualStyleBackColor = true;
@@ -56,17 +59,30 @@
             // userNameLable
             // 
             userNameLable.AutoSize = true;
-            userNameLable.Location = new Point(23, 24);
+            userNameLable.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            userNameLable.Location = new Point(106, 22);
             userNameLable.Name = "userNameLable";
-            userNameLable.Size = new Size(90, 15);
+            userNameLable.Size = new Size(143, 25);
             userNameLable.TabIndex = 2;
             userNameLable.Text = "Пользователь: ";
+            // 
+            // StartGameButton
+            // 
+            StartGameButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            StartGameButton.Location = new Point(146, 195);
+            StartGameButton.Name = "StartGameButton";
+            StartGameButton.Size = new Size(175, 84);
+            StartGameButton.TabIndex = 3;
+            StartGameButton.Text = "Играть";
+            StartGameButton.UseVisualStyleBackColor = true;
+            StartGameButton.Click += StartGameButton_Click;
             // 
             // StartMenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(472, 450);
+            Controls.Add(StartGameButton);
             Controls.Add(userNameLable);
             Controls.Add(registrationButton);
             Controls.Add(ResultsTableButton);
@@ -81,5 +97,6 @@
         private Button ResultsTableButton;
         private Button registrationButton;
         private Label userNameLable;
+        private Button StartGameButton;
     }
 }

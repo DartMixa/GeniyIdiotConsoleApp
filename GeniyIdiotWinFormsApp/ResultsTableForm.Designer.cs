@@ -37,34 +37,43 @@
             // 
             // resultTableDataGridView
             // 
-            resultTableDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resultTableDataGridView.AllowUserToAddRows = false;
+            resultTableDataGridView.AllowUserToDeleteRows = false;
+            resultTableDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             resultTableDataGridView.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
             resultTableDataGridView.GridColor = SystemColors.Window;
             resultTableDataGridView.Location = new Point(45, 37);
             resultTableDataGridView.Name = "resultTableDataGridView";
-            resultTableDataGridView.Size = new Size(702, 375);
+            resultTableDataGridView.ReadOnly = true;
+            resultTableDataGridView.Size = new Size(643, 375);
             resultTableDataGridView.TabIndex = 2;
             // 
             // Column1
             // 
-            Column1.HeaderText = "Column1";
+            Column1.HeaderText = "Имя";
             Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 200;
             // 
             // Column2
             // 
-            Column2.HeaderText = "Column2";
+            Column2.HeaderText = "Количество верных ответов";
             Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 200;
             // 
             // Column3
             // 
-            Column3.HeaderText = "Column3";
+            Column3.HeaderText = "Диагноз";
             Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Width = 200;
             // 
             // ResultsTableForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(731, 450);
             Controls.Add(resultTableDataGridView);
             Name = "ResultsTableForm";
             Text = "Таблица результатов";
@@ -75,8 +84,8 @@
         #endregion
 
         private DataGridView resultTableDataGridView;
-		private DataGridViewTextBoxColumn Column1;
-		private DataGridViewTextBoxColumn Column2;
-		private DataGridViewTextBoxColumn Column3;
-	}
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+    }
 }

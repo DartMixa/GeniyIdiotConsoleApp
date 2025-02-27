@@ -33,6 +33,7 @@
             userNameLable = new Label();
             StartGameButton = new Button();
             AddQuestionButton = new Button();
+            DeleteQuestionButton = new Button();
             SuspendLayout();
             // 
             // ResultsTableButton
@@ -89,11 +90,23 @@
             AddQuestionButton.UseVisualStyleBackColor = true;
             AddQuestionButton.Click += AddQuestionButton_Click;
             // 
+            // DeleteQuestionButton
+            // 
+            DeleteQuestionButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            DeleteQuestionButton.Location = new Point(254, 312);
+            DeleteQuestionButton.Name = "DeleteQuestionButton";
+            DeleteQuestionButton.Size = new Size(175, 84);
+            DeleteQuestionButton.TabIndex = 5;
+            DeleteQuestionButton.Text = "Удалить вопрос";
+            DeleteQuestionButton.UseVisualStyleBackColor = true;
+            DeleteQuestionButton.Click += DeleteQuestionButton_Click;
+            // 
             // StartMenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(472, 450);
+            Controls.Add(DeleteQuestionButton);
             Controls.Add(AddQuestionButton);
             Controls.Add(StartGameButton);
             Controls.Add(userNameLable);
@@ -112,5 +125,6 @@
         private Label userNameLable;
         private Button StartGameButton;
         private Button AddQuestionButton;
+        private Button DeleteQuestionButton;
     }
 }

@@ -17,10 +17,10 @@ namespace GeniyIdiotWinFormsApp
         int CountRightAnswers = 0;
         public event Action<int> FinishGame;
         Question currentQuestion;
-        Question CurrentQuestion 
+        Question CurrentQuestion
         {
             get { return currentQuestion; }
-            set 
+            set
             {
                 currentQuestion = value;
                 questionTextBox1.Text = value.question;
@@ -42,7 +42,7 @@ namespace GeniyIdiotWinFormsApp
             {
                 respondButton.Enabled = true;
             }
-            else 
+            else
             {
                 respondButton.Enabled = false;
             }
@@ -50,7 +50,7 @@ namespace GeniyIdiotWinFormsApp
 
         private void respondButton_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(respondTextBox1.Text) == currentQuestion.answer) 
+            if (Convert.ToInt32(respondTextBox1.Text) == currentQuestion.answer)
             {
                 CountRightAnswers++;
             }
@@ -60,7 +60,7 @@ namespace GeniyIdiotWinFormsApp
                 respondTextBox1.Text = "";
                 respondButton.Enabled = false;
             }
-            else 
+            else
             {
                 Finish();
             }

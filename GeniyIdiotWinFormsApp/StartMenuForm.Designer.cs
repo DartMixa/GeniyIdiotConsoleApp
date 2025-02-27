@@ -32,6 +32,7 @@
             registrationButton = new Button();
             userNameLable = new Label();
             StartGameButton = new Button();
+            AddQuestionButton = new Button();
             SuspendLayout();
             // 
             // ResultsTableButton
@@ -77,11 +78,23 @@
             StartGameButton.UseVisualStyleBackColor = true;
             StartGameButton.Click += StartGameButton_Click;
             // 
+            // AddQuestionButton
+            // 
+            AddQuestionButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            AddQuestionButton.Location = new Point(43, 312);
+            AddQuestionButton.Name = "AddQuestionButton";
+            AddQuestionButton.Size = new Size(175, 84);
+            AddQuestionButton.TabIndex = 4;
+            AddQuestionButton.Text = "Добавить вопрос";
+            AddQuestionButton.UseVisualStyleBackColor = true;
+            AddQuestionButton.Click += AddQuestionButton_Click;
+            // 
             // StartMenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(472, 450);
+            Controls.Add(AddQuestionButton);
             Controls.Add(StartGameButton);
             Controls.Add(userNameLable);
             Controls.Add(registrationButton);
@@ -98,5 +111,6 @@
         private Button registrationButton;
         private Label userNameLable;
         private Button StartGameButton;
+        private Button AddQuestionButton;
     }
 }

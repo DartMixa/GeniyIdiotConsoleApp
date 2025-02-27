@@ -1,4 +1,5 @@
 using GeniyIdiotConsoleApp;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace GeniyIdiotWinFormsApp
@@ -35,7 +36,7 @@ namespace GeniyIdiotWinFormsApp
 
         private void ResultsTableButton_Click(object sender, EventArgs e)
         {
-            resultsTableForm?.Dispose();
+            resultsTableForm?.Close();
             resultsTableForm = new();
             resultsTableForm.UpdateTable(usersResultStorage.GetResults());
             resultsTableForm.Show();
@@ -54,19 +55,31 @@ namespace GeniyIdiotWinFormsApp
 
         private void StartGameButton_Click(object sender, EventArgs e)
         {
-            gameForm?.Dispose();
+            gameForm?.Close();
             gameForm = new(questionsStorage);
             gameForm.FinishGame += FinishGame;
+            gameForm.FormClosed += GameFormClose;
             gameForm.Show();
             Hide();
         }
-        private void FinishGame(int result) 
+        private void FinishGame(int result)
         {
             Show();
             string diagnose = DiagnoseCalculator.GetDiagnose(result, questionsStorage.Questions.Count());
             usersResultStorage.AddDiagnose(user, new Diagnose(result, diagnose));
             usersResultStorage.Save();
             resultsTableForm?.UpdateTable(usersResultStorage.GetResults());
+        }
+
+        private void GameFormClose(object? sender, FormClosedEventArgs e)
+        {
+            Close();
+        }
+
+        private void AddQuestionButton_Click(object sender, EventArgs e)
+        {
+            AddQuestionForm addQuestionForm = new(questionsStorage);
+            addQuestionForm.ShowDialog();
         }
     }
 }

@@ -72,7 +72,7 @@
             Controls.Add(respondButton);
             Controls.Add(respondTextBox1);
             Name = "GameForm";
-            Text = "GameForm";
+            Text = "Игра";
             ResumeLayout(false);
             PerformLayout();
         }

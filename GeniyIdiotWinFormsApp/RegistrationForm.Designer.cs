@@ -72,7 +72,7 @@
             Controls.Add(RegistrationTextBox);
             Controls.Add(label1);
             Name = "RegistrationForm";
-            Text = "RegistrationForm";
+            Text = "Регистрация";
             ResumeLayout(false);
             PerformLayout();
         }

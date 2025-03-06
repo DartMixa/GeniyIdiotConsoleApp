@@ -10,7 +10,7 @@ namespace GeniyIdiotConsoleApp
 {
     internal class QuestionsStorage : IEnumerable<Question>, IEnumerator<Question>
     {
-        private List<Question> Questions { get; set; } = [];
+        public List<Question> Questions { get; set; } = [];
         private List<Question> TemporaryQuestionList { get; set; } = [];
         public int CountQuestions => Questions.Count;
 
@@ -36,7 +36,7 @@ namespace GeniyIdiotConsoleApp
             {
                 List<Question> questions = [];
 
-                var txt = FileSystem.ReadFile("questions").Split("\n");
+                var txt = FileSystem.ReadFile("questions.txt").Split("\n");
 
                 foreach (var item in txt)
                 {
@@ -49,8 +49,8 @@ namespace GeniyIdiotConsoleApp
 
                 return new QuestionsStorage(questions);
             }
-            catch (System.IO.FileNotFoundException) 
-            {
+            catch (System.IO.FileNotFoundException)
+			{
                 QuestionsStorage qe = GetQuestions();
                 qe.Save();
                 return qe;
@@ -64,7 +64,7 @@ namespace GeniyIdiotConsoleApp
             {
                 txt += string.Format("{0};;;{1}\n", question.question, Convert.ToString(question.answer));
             }
-            FileSystem.WriteFile("questions", txt);
+            FileSystem.WriteFile("questions.txt", txt);
         }
 
         public QuestionsStorage(List<Question> questions) 
@@ -72,13 +72,14 @@ namespace GeniyIdiotConsoleApp
             Questions = questions;
         }
 
-        private void Randomize()
+        public void CreateTempList()
         {
             foreach (var question in Questions) 
             {
                 TemporaryQuestionList.Add(question);
             }
         }
+
         public void Add(Question question) 
         {
             Questions.Add(question);
@@ -87,13 +88,13 @@ namespace GeniyIdiotConsoleApp
 
         public IEnumerator<Question> GetEnumerator()
         {
-            Randomize();
+            CreateTempList();
             return this;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            Randomize();
+            CreateTempList();
             return this;
         }
 
@@ -108,7 +109,7 @@ namespace GeniyIdiotConsoleApp
 
         public void Reset()
         {
-            Randomize();
+            CreateTempList();
         }
 
         public void Dispose()

@@ -38,16 +38,17 @@ namespace GeniyIdiotWinFormsApp
         {
             resultsTableForm?.Close();
             resultsTableForm = new();
-            resultsTableForm.UpdateTable(usersResultStorage.GetResults());
-            resultsTableForm.Show();
+			UpdateTable();
+			resultsTableForm.Show();
         }
-
+        
         private void registrationButton_Click(object sender, EventArgs e)
         {
             RegistrationForm registrationForm = new();
             registrationForm.LogIn += Authorization;
             registrationForm.ShowDialog();
         }
+
         private void Authorization(string name)
         {
             User = new User(name);
@@ -62,14 +63,22 @@ namespace GeniyIdiotWinFormsApp
             gameForm.Show();
             Hide();
         }
+
         private void FinishGame(int result)
         {
             Show();
             string diagnose = DiagnoseCalculator.GetDiagnose(result, questionsStorage.Questions.Count());
             usersResultStorage.AddDiagnose(user, new Diagnose(result, diagnose));
             usersResultStorage.Save();
-            resultsTableForm?.UpdateTable(usersResultStorage.GetResults());
+            if (!resultsTableForm.IsDisposed) 
+            {
+				UpdateTable();
+            }
         }
+        private void UpdateTable()
+        {
+			resultsTableForm?.UpdateTable(usersResultStorage.GetResults());
+		}
 
         private void GameFormClose(object? sender, FormClosedEventArgs e)
         {

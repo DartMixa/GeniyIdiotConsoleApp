@@ -10,22 +10,22 @@ using System.Windows.Forms;
 
 namespace GeniyIdiotWinFormsApp
 {
-    public partial class ResultsTableForm : Form
-    {
-        public ResultsTableForm()
-        {
-            InitializeComponent();
-        }
-        public void UpdateTable(List<List<string>> results)
-        {
-            resultTableDataGridView.Rows.Clear();
-            for (int i = 0; i < results.Count; i++)
-            {
-                resultTableDataGridView.Rows.Add();
-                resultTableDataGridView.Rows[i].Cells[0].Value = results[i][0];
-                resultTableDataGridView.Rows[i].Cells[1].Value = results[i][1];
-                resultTableDataGridView.Rows[i].Cells[2].Value = results[i][2];
-            }
-        }
-    }
+	public partial class ResultsTableForm : Form
+	{
+		public ResultsTableForm()
+		{
+			InitializeComponent();
+		}
+		public void UpdateTable(List<List<string>> results)
+		{
+			resultTableDataGridView.Rows.Clear();
+			for (int i = 0; i < results.Count; i++)
+			{
+				resultTableDataGridView.Rows.Add();
+				resultTableDataGridView.Rows[i].Cells[0].Value = results[i][0];
+				resultTableDataGridView.Rows[i].Cells[1].Value = results[i][1];
+				resultTableDataGridView.Rows[i].Cells[2].Value = results[i][2];
+			}
+		}
+	}
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GeniyIdiotConsoleApp
 {
-    internal class UsersResultStorage
+    public class UsersResultStorage
     {
         private Dictionary<User, List<Diagnose>> storage = [];
         public UsersResultStorage() { }
@@ -26,16 +26,20 @@ namespace GeniyIdiotConsoleApp
                 storage[user] = [diagnose];
             }
         }
-        public void PrintTable()
+        public List<List<string>> GetResults()
         {
-            Console.WriteLine("{0, -20}{1, 20} \t {2}", "ФИО", "кол-во правильных ответов", "Диагноз");
+            List<List<string>> result = [];
             foreach (var item in storage)
             {
-                foreach (var diagnose in item.Value) 
+                foreach (var diagnose in item.Value)
                 {
-                    Console.WriteLine("{0, -20}{1, 20} \t {2}", item.Key.Name, diagnose.countRightAnswers, diagnose.diagnose);
+                    result.Add([]);
+                    result[^1].Add(item.Key.Name);
+                    result[^1].Add(Convert.ToString(diagnose.countRightAnswers));
+                    result[^1].Add(diagnose.diagnose);
                 }
             }
+            return result;
         }
         public void Save()
         {

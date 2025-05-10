@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeniyIdiotConsoleApp
 {
-    internal class Diagnose
+    public class Diagnose
     {
         public int countRightAnswers = 0;
         public string diagnose = "";

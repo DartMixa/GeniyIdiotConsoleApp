@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GeniyIdiotConsoleApp
 {
-    internal class QuestionsStorage : IEnumerable<Question>, IEnumerator<Question>
+    public class QuestionsStorage : IEnumerable<Question>, IEnumerator<Question>
     {
         public List<Question> Questions { get; set; } = [];
         private List<Question> TemporaryQuestionList { get; set; } = [];

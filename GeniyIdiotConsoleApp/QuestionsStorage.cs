@@ -5,11 +5,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace GeniyIdiotConsoleApp
 {
     public class QuestionsStorage : IEnumerable<Question>, IEnumerator<Question>
     {
+        public static string Path = "questions.json";
         public List<Question> Questions { get; set; } = [];
         private List<Question> TemporaryQuestionList { get; set; } = [];
         public int CountQuestions => Questions.Count;
@@ -30,26 +32,24 @@ namespace GeniyIdiotConsoleApp
 
         object IEnumerator.Current => Next;
 
-        static public QuestionsStorage Load() 
+        static public QuestionsStorage Load()
         {
             try
             {
-                List<Question> questions = [];
+                List<Question>? questions = [];
 
-                var txt = FileSystem.ReadFile("questions.txt").Split("\n");
+                var JsonData = FileSystem.ReadFile(Path);
 
-                foreach (var item in txt)
+                questions = JsonConvert.DeserializeObject<List<Question>>(JsonData);
+
+                if (questions is null) 
                 {
-                    if (item != "") 
-                    {
-                        var questionAnswer = item.Split(";;;");
-                        questions.Add(new Question(questionAnswer[0], Convert.ToInt32(questionAnswer[1]))); 
-                    }
+                    throw new Exception();
                 }
 
-                return new QuestionsStorage(questions);
+				return new QuestionsStorage(questions);
             }
-            catch (System.IO.FileNotFoundException)
+            catch (Exception)
 			{
                 QuestionsStorage qe = GetQuestions();
                 qe.Save();
@@ -59,12 +59,8 @@ namespace GeniyIdiotConsoleApp
 
         public void Save()
         {
-            var txt = "";
-            foreach (var question in Questions)
-            {
-                txt += string.Format("{0};;;{1}\n", question.question, Convert.ToString(question.answer));
-            }
-            FileSystem.WriteFile("questions.txt", txt);
+			var JsonData = JsonConvert.SerializeObject(Questions);
+			FileSystem.WriteFile(Path, JsonData);
         }
 
         public QuestionsStorage(List<Question> questions) 

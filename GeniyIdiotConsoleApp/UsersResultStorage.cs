@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +10,9 @@ namespace GeniyIdiotConsoleApp
 {
     public class UsersResultStorage
     {
-        private Dictionary<User, List<Diagnose>> storage = [];
+        public static string Path = "results.json";
+
+		private Dictionary<User, List<Diagnose>> storage = [];
         public UsersResultStorage() { }
         public UsersResultStorage(Dictionary<User, List<Diagnose>> storage)
         {
@@ -43,33 +46,20 @@ namespace GeniyIdiotConsoleApp
         }
         public void Save()
         {
-            string txt = "";
-            foreach (var item in storage)
-            {
-                foreach (var diagnose in item.Value)
-                {
-                    txt += string.Format("{0};;;{1};;;{2}\n", item.Key.Name, diagnose.countRightAnswers, diagnose.diagnose);
-                }
-            }
-            FileSystem.WriteFile("results.txt", txt);
+            var JsonData = JsonConvert.SerializeObject(storage);
+			FileSystem.WriteFile(Path, JsonData);
         }
         public void Load()
         {
             try
             {
-                var txt = (FileSystem.ReadFile("results.txt").Split("\n"));
-                foreach (var item in txt)
-                {
-                    var strSplit = item.Split(";;;");
-                    if (item != null && item.Length != 0)
-                    {
-                        AddDiagnose(new(strSplit[0]), new(Convert.ToInt32(strSplit[1]), new(strSplit[2])));
-                    }
-                }
-            }
-            catch (System.IO.FileNotFoundException)
+                var JsonData = FileSystem.ReadFile(Path);
+                storage = JsonConvert.DeserializeObject<Dictionary<User, List<Diagnose>>>(JsonData) ?? throw new Exception();
+
+			}
+            catch (Exception)
             {
-                FileSystem.WriteFile("results.txt", "");
+                FileSystem.WriteFile(Path, "");
 			}
         }
     }

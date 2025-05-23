@@ -27,6 +27,23 @@ namespace GeniyIdiotWinFormsApp
 			}
 		}
 
+		int time = 10;
+
+		private int Time 
+		{
+			get { return time; }
+			set 
+			{
+				time = value;
+				if (time == 0) 
+				{
+					time = 10;
+					Respond();
+				}
+				label1.Text = Convert.ToString(time);
+			}
+		}
+
 		public GameForm(QuestionsStorage storage)
 		{
 			InitializeComponent();
@@ -34,6 +51,7 @@ namespace GeniyIdiotWinFormsApp
 			this.storage = storage;
 			this.storage.Reset();
 			CurrentQuestion = this.storage.Next;
+			EndGameTimer.Start();
 		}
 
 		private void respondTextBox1_TextChanged(object sender, EventArgs e)
@@ -61,7 +79,7 @@ namespace GeniyIdiotWinFormsApp
 		}
 		private void Respond()
 		{
-			if (Convert.ToInt32(respondTextBox1.Text) == currentQuestion.answer)
+			if (int.TryParse(respondTextBox1.Text, out var answer) && Convert.ToInt32(respondTextBox1.Text) == currentQuestion.answer)
 			{
 				CountRightAnswers++;
 			}
@@ -76,11 +94,16 @@ namespace GeniyIdiotWinFormsApp
 				Finish();
 			}
 		}
-			
+
 		private void Finish()
 		{
 			FinishGame(CountRightAnswers);
 			Dispose();
+		}
+
+		private void EndGameTimerTick(object sender, EventArgs e)
+		{
+			Time -= 1;
 		}
 	}
 }

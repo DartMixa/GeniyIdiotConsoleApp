@@ -90,11 +90,5 @@ namespace GeniyIdiotWinFormsApp
             AddQuestionForm addQuestionForm = new(questionsStorage);
             addQuestionForm.ShowDialog();
         }
-
-        private void DeleteQuestionButton_Click(object sender, EventArgs e)
-        {
-            DeleteQuestionForm deleteQuestionForm = new(questionsStorage);
-            deleteQuestionForm.ShowDialog();
-        }
     }
 }

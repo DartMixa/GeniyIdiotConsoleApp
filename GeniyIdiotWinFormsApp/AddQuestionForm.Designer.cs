@@ -38,12 +38,13 @@
 			Column1 = new DataGridViewTextBoxColumn();
 			Column2 = new DataGridViewTextBoxColumn();
 			label3 = new Label();
+			DeleteButton = new Button();
 			((System.ComponentModel.ISupportInitialize)questionsDataGridView).BeginInit();
 			SuspendLayout();
 			// 
 			// questionTextBox
 			// 
-			questionTextBox.Location = new Point(641, 114);
+			questionTextBox.Location = new Point(655, 65);
 			questionTextBox.Multiline = true;
 			questionTextBox.Name = "questionTextBox";
 			questionTextBox.Size = new Size(381, 96);
@@ -53,7 +54,7 @@
 			// 
 			// answerTextBox
 			// 
-			answerTextBox.Location = new Point(641, 271);
+			answerTextBox.Location = new Point(655, 192);
 			answerTextBox.Name = "answerTextBox";
 			answerTextBox.Size = new Size(381, 23);
 			answerTextBox.TabIndex = 1;
@@ -64,7 +65,7 @@
 			// 
 			acceptButton.Enabled = false;
 			acceptButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-			acceptButton.Location = new Point(641, 330);
+			acceptButton.Location = new Point(655, 221);
 			acceptButton.Name = "acceptButton";
 			acceptButton.Size = new Size(381, 56);
 			acceptButton.TabIndex = 3;
@@ -76,7 +77,7 @@
 			// 
 			label1.AutoSize = true;
 			label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-			label1.Location = new Point(641, 86);
+			label1.Location = new Point(655, 37);
 			label1.Name = "label1";
 			label1.Size = new Size(150, 25);
 			label1.TabIndex = 4;
@@ -86,7 +87,7 @@
 			// 
 			label2.AutoSize = true;
 			label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-			label2.Location = new Point(641, 243);
+			label2.Location = new Point(655, 164);
 			label2.Name = "label2";
 			label2.Size = new Size(203, 25);
 			label2.TabIndex = 5;
@@ -102,6 +103,7 @@
 			questionsDataGridView.Location = new Point(12, 12);
 			questionsDataGridView.Name = "questionsDataGridView";
 			questionsDataGridView.ReadOnly = true;
+			questionsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 			questionsDataGridView.Size = new Size(623, 374);
 			questionsDataGridView.TabIndex = 6;
 			questionsDataGridView.KeyDown += questionsDataGridView_KeyDown;
@@ -131,17 +133,29 @@
 			// 
 			label3.AutoSize = true;
 			label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-			label3.Location = new Point(641, 38);
+			label3.Location = new Point(641, 12);
 			label3.Name = "label3";
 			label3.Size = new Size(164, 25);
 			label3.TabIndex = 7;
 			label3.Text = "Добавить вопрос";
 			// 
+			// DeleteButton
+			// 
+			DeleteButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+			DeleteButton.Location = new Point(655, 320);
+			DeleteButton.Name = "DeleteButton";
+			DeleteButton.Size = new Size(381, 56);
+			DeleteButton.TabIndex = 8;
+			DeleteButton.Text = "Удолить выбранный вопрос";
+			DeleteButton.UseVisualStyleBackColor = true;
+			DeleteButton.Click += DeleteButton_Click;
+			// 
 			// AddQuestionForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1028, 408);
+			ClientSize = new Size(1045, 408);
+			Controls.Add(DeleteButton);
 			Controls.Add(label3);
 			Controls.Add(questionsDataGridView);
 			Controls.Add(label2);
@@ -169,5 +183,6 @@
 		private DataGridViewTextBoxColumn Column1;
 		private DataGridViewTextBoxColumn Column2;
 		private Label label3;
+		private Button DeleteButton;
 	}
 }

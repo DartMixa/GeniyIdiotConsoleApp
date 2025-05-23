@@ -64,11 +64,19 @@ namespace GeniyIdiotWinFormsApp
 		{
 			if (e.KeyCode == Keys.Delete)
 			{
-				storage.Questions.RemoveAt((int)questionsDataGridView.SelectedRows[0].Cells[0].Value);
-				storage.Save();
-				TableUpdate();
-				
+				DeleteSelectecdQuestion();
 			}
+		}
+		private void DeleteButton_Click(object sender, EventArgs e)
+		{
+			DeleteSelectecdQuestion();
+		}
+
+		private void DeleteSelectecdQuestion()
+		{
+			storage.Questions.RemoveAt((int)(questionsDataGridView.SelectedRows[0].Cells[0].Value ?? throw new Exception()));
+			storage.Save();
+			TableUpdate();
 		}
 	}
 }

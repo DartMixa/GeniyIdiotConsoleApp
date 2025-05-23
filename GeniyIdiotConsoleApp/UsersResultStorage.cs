@@ -46,7 +46,7 @@ namespace GeniyIdiotConsoleApp
         }
         public void Save()
         {
-            var JsonData = JsonConvert.SerializeObject(storage);
+            var JsonData = JsonConvert.SerializeObject(GetResults());
 			FileSystem.WriteFile(Path, JsonData);
         }
         public void Load()
@@ -54,8 +54,11 @@ namespace GeniyIdiotConsoleApp
             try
             {
                 var JsonData = FileSystem.ReadFile(Path);
-                storage = JsonConvert.DeserializeObject<Dictionary<User, List<Diagnose>>>(JsonData) ?? throw new Exception();
-
+				List<List<string>> temp = JsonConvert.DeserializeObject<List<List<string>>>(JsonData) ?? throw new Exception();
+                foreach (var t in temp)
+                {
+                    AddDiagnose(new(t[0]), new(Convert.ToInt32(t[1]), t[2]));
+				}
 			}
             catch (Exception)
             {

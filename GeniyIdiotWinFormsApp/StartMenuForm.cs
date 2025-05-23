@@ -70,7 +70,7 @@ namespace GeniyIdiotWinFormsApp
             string diagnose = DiagnoseCalculator.GetDiagnose(result, questionsStorage.Questions.Count());
             usersResultStorage.AddDiagnose(user, new Diagnose(result, diagnose));
             usersResultStorage.Save();
-            if (!resultsTableForm.IsDisposed) 
+            if (resultsTableForm is not null && !resultsTableForm.IsDisposed)
             {
 				UpdateTable();
             }

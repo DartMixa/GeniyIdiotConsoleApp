@@ -37,7 +37,6 @@ namespace GeniyIdiotWinFormsApp
 				time = value;
 				if (time == 0) 
 				{
-					time = 10;
 					Respond();
 				}
 				label1.Text = Convert.ToString(time);
@@ -79,7 +78,8 @@ namespace GeniyIdiotWinFormsApp
 		}
 		private void Respond()
 		{
-			if (int.TryParse(respondTextBox1.Text, out var answer) && Convert.ToInt32(respondTextBox1.Text) == currentQuestion.answer)
+            Time = 10;
+            if (int.TryParse(respondTextBox1.Text, out var answer) && Convert.ToInt32(respondTextBox1.Text) == currentQuestion.answer)
 			{
 				CountRightAnswers++;
 			}

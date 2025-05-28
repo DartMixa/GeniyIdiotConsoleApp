@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
+using System.Timers;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace GeniyIdiotConsoleApp
@@ -8,6 +10,7 @@ namespace GeniyIdiotConsoleApp
     {
         static UsersResultStorage usersResultStorage = new();
         static QuestionsStorage questions;
+        static private int timerSecondCount;
         static void Main(string[] args)
         {
             usersResultStorage.Load();
@@ -66,12 +69,19 @@ namespace GeniyIdiotConsoleApp
         static void Game(User user)
         {
             Diagnose diagnose = new Diagnose();
+            timerSecondCount = 10;
+            System.Timers.Timer timer = new(1000);
+            timer.Elapsed += OnTimerElapsed;
+            timer.AutoReset = true;
 
             int i = 0;
             foreach (var question in questions)
             {
+                timer.Start();
                 i++;
+
                 Console.WriteLine("Вопрос №" + i);
+                Console.WriteLine("Таймер: " + timerSecondCount);
 
                 Console.WriteLine(question.question);
 
@@ -93,6 +103,18 @@ namespace GeniyIdiotConsoleApp
 
             usersResultStorage.AddDiagnose(user, diagnose);
             usersResultStorage.Save();
+        }
+        public static void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            timerSecondCount--;
+            if (timerSecondCount == 0)
+            {
+                timerSecondCount = 10;
+            }
+            var cursorPosition = Console.GetCursorPosition();
+            Console.SetCursorPosition(0, cursorPosition.Top - 2);
+            Console.WriteLine("Таймер: " + timerSecondCount + "     ");
+            Console.SetCursorPosition(cursorPosition.Left, cursorPosition.Top);
         }
         static void AddQuestion()
         {

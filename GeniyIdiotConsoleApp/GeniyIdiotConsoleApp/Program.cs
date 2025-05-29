@@ -61,6 +61,16 @@ namespace GeniyIdiotConsoleApp
                 }
             }
         }
+        static int? GetAnswerWithTimer()
+        {
+            bool isInput = Reader.TryReadLine(out string? input, 10000);
+            bool IsNumber = int.TryParse(input, out var answer);
+            if (isInput && IsNumber) 
+            {
+                return answer;
+            }
+            return null;
+        }
         static User Authorization()
         {
             Console.WriteLine("Здравствуйте, как вас зовут?");
@@ -85,14 +95,16 @@ namespace GeniyIdiotConsoleApp
 
                 Console.WriteLine(question.question);
 
-                var userAnswer = GetAnswer();
+                var userAnswer = GetAnswerWithTimer();
 
                 var rightAnswer = question.answer;
 
-                if (userAnswer == rightAnswer)
+                if (userAnswer is not null && userAnswer == rightAnswer)
                 {
                     diagnose.countRightAnswers++;
                 }
+                timer.Stop();
+                timerSecondCount = 10;
             }
 
             diagnose.diagnose = DiagnoseCalculator.GetDiagnose(diagnose.countRightAnswers, questions.CountQuestions);
@@ -143,6 +155,49 @@ namespace GeniyIdiotConsoleApp
             {
                 Console.WriteLine($"Не удалось удалить вопрос с номером {userChoice}");
             }
+        }
+    }
+    class Reader
+    {
+        private static Thread inputThread;
+        private static AutoResetEvent getInput, gotInput;
+        private static string input;
+        static Reader()
+        {
+            getInput = new AutoResetEvent(false);
+            gotInput = new AutoResetEvent(false);
+            inputThread = new Thread(reader);
+            inputThread.IsBackground = true;
+            inputThread.Start();
+        }
+        private static void reader()
+        {
+            while (true)
+            {
+                getInput.WaitOne();
+                input = Console.ReadLine();
+                gotInput.Set();
+            }
+        }
+        // omit the parameter to read a line without a timeout
+        public static string ReadLine(int timeOutMillisecs = Timeout.Infinite)
+        {
+            getInput.Set();
+            bool success = gotInput.WaitOne(timeOutMillisecs);
+            if (success)
+                return input;
+            else
+                throw new TimeoutException("User did not provide input within the timelimit.");
+        }
+        public static bool TryReadLine(out string? line, int timeOutMillisecs = Timeout.Infinite)
+        {
+            getInput.Set();
+            bool success = gotInput.WaitOne(timeOutMillisecs);
+            if (success)
+                line = input;
+            else
+                line = null;
+            return success;
         }
     }
 }

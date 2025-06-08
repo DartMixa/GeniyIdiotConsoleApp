@@ -38,7 +38,7 @@ namespace _2048WinFormsApp
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            var game = new GameForm(bestResult);
+            var game = new GameForm(bestResult, (int)SizeGridNumericUpDown.Value);
             //game.Location = this.Location + Size / 2 - game.Size / 2;
             game.Show();
             this.Hide();

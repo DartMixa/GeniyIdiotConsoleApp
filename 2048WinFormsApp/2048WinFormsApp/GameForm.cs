@@ -1,6 +1,7 @@
 using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using static System.Net.WebRequestMethods;
 
 namespace _2048WinFormsApp
@@ -9,6 +10,7 @@ namespace _2048WinFormsApp
     {
         private Grid grid;
         private Random random = new();
+        private int size;
         private int score = 0;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int Score
@@ -36,17 +38,18 @@ namespace _2048WinFormsApp
                 BestScoreLabel.Text = "Лучший Результат: " + bestScore.ToString();
             }
         }
-        public GameForm(int bestScore)
+        public GameForm(int bestScore, int size = 4)
         {
             InitializeComponent();
             BestScore = bestScore;
+            this.size = size;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Score = 0;
-            GenerateGrid(4);
-            grid.SetRandomPos(2);
+            GenerateGrid(size);
+            FillRandomCell();
             GeneratePosScoreLabel();
         }
         private void GeneratePosScoreLabel()

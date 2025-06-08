@@ -1,12 +1,14 @@
 using System.CodeDom.Compiler;
-using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using static System.Net.WebRequestMethods;
 
 namespace _2048WinFormsApp
 {
     public partial class GameForm : Form
     {
         private Grid grid;
+        private Random random = new();
         private int score = 0;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int Score
@@ -208,7 +210,8 @@ namespace _2048WinFormsApp
         {
             if (grid.IsFreePlace())
             {
-                grid.SetRandomPos(2);
+                int ver = random.Next(4);
+                grid.SetRandomPos(ver >= 3 ? 4 : 2);
             }
             else 
             {

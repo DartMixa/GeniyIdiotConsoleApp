@@ -39,7 +39,7 @@ namespace _2048WinFormsApp
                 for (int j = 0; j < GredSize; j++)
                 {
                     var label = new Label();
-                    label.BackColor = SystemColors.ButtonShadow;
+                    SetColor(label);
                     label.TextAlign = ContentAlignment.MiddleCenter;
                     label.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
                     label.Location = new Point(sep + i * (ButtonSize + sep), UpperMargin + sep + j * (ButtonSize + sep));
@@ -61,6 +61,7 @@ namespace _2048WinFormsApp
                 {
                     tempIndexList.Add((i, j));
                     grid[i, j].Text = "";
+                    SetColor(grid[i, j]);
                 }
                 else
                 {
@@ -69,8 +70,19 @@ namespace _2048WinFormsApp
                         tempIndexList.Remove((i, j));
                     }
                     grid[i, j].Text = Convert.ToString(value);
+                    SetColor(grid[i, j], (int)value);
                 }
             }
+        }
+        static public void SetColor(Label cell, int value)
+        {
+            int lg = (int)Math.Log2(value);
+            int col = 255 - lg * 40;
+            cell.BackColor = Color.FromArgb(Math.Max(col, 0), 255 + (col > 0 ? 0 : col), 255 + (col > 0 ? 0 : col));
+        }
+        static public void SetColor(Label cell)
+        {
+            cell.BackColor = Color.FromArgb(255, 255, 255);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace _2048WinFormsApp
             (int, int) val = tempIndexList[ind];
             this[val.Item1, val.Item2] = value;
         }
-        private void GenerateGrid(int GredSize = 4, int sep = 20, int ButtonSize = 70)
+        private void GenerateGrid(int GredSize = 4, int sep = 20, int ButtonSize = 70, int UpperMargin = 100)
         {
             for (int i = 0; i < GredSize; i++)
             {
@@ -37,7 +38,7 @@ namespace _2048WinFormsApp
                     label.BackColor = SystemColors.ButtonShadow;
                     label.TextAlign = ContentAlignment.MiddleCenter;
                     label.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
-                    label.Location = new Point(sep + i * (ButtonSize + sep), sep + j * (ButtonSize + sep));
+                    label.Location = new Point(sep + i * (ButtonSize + sep), UpperMargin + sep + j * (ButtonSize + sep));
                     label.Size = new Size(ButtonSize, ButtonSize);
                     label.TabIndex = 0;
                     label.Enabled = false;

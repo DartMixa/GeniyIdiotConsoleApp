@@ -1,11 +1,23 @@
 using System.CodeDom.Compiler;
 using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
 
 namespace _2048WinFormsApp
 {
     public partial class GameForm : Form
     {
         private Gred gred;
+        private int score = 0;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int Score
+        {
+            get { return score; }
+            set 
+            { 
+                score = value;
+                ScoreLabel.Text = "Ñ÷¸ò: " + score.ToString();
+            }
+        }
         public GameForm()
         {
             InitializeComponent();
@@ -13,14 +25,20 @@ namespace _2048WinFormsApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Score = 0;
             GenerateGrid(4);
             gred.SetRandomPos(2);
+            GeneratePosScoreLabel();
         }
-
-        private void GenerateGrid(int GredSize = 4, int sep = 20, int ButtonSize = 60)
+        private void GeneratePosScoreLabel(int UpperMargin = 100)
+        {
+            ScoreLabel.Size = new System.Drawing.Size(this.Size.Width, 50);
+            ScoreLabel.Location = new System.Drawing.Point(0, (UpperMargin - 50) / 2);
+        }
+        private void GenerateGrid(int GredSize = 4, int sep = 20, int ButtonSize = 60, int UpperMargin = 100)
         {
             gred = new Gred(GredSize, sep, ButtonSize);
-            ClientSize = new Size(sep + GredSize * (ButtonSize + sep), sep + GredSize * (ButtonSize + sep));
+            ClientSize = new Size(sep + GredSize * (ButtonSize + sep), UpperMargin + sep + GredSize * (ButtonSize + sep));
             for (int i = 0; i < GredSize; i++)
             {
                 for (int j = 0; j < GredSize; j++)
@@ -29,7 +47,6 @@ namespace _2048WinFormsApp
                 }
             }
         }
-
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up)
@@ -48,6 +65,7 @@ namespace _2048WinFormsApp
                                     {
                                         gred[i, k] = gred[i, k] + gred[i, j];
                                         gred[i, j] = null;
+                                        Score += (int)gred[i, k];
                                     }
                                     else 
                                     {
@@ -86,6 +104,7 @@ namespace _2048WinFormsApp
                                     {
                                         gred[i, k] = gred[i, k] + gred[i, j];
                                         gred[i, j] = null;
+                                        Score += (int)gred[i, k];
                                     }
                                     else
                                     {
@@ -124,6 +143,7 @@ namespace _2048WinFormsApp
                                     {
                                         gred[k, i] = gred[k, i] + gred[j, i];
                                         gred[j, i] = null;
+                                        Score += (int)gred[k, i];
                                     }
                                     else
                                     {
@@ -162,6 +182,7 @@ namespace _2048WinFormsApp
                                     {
                                         gred[k, i] = gred[k, i] + gred[j, i];
                                         gred[j, i] = null;
+                                        Score += (int)gred[k, i];
                                     }
                                     else
                                     {

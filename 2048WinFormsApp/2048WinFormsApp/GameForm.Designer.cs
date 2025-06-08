@@ -28,20 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ScoreLabel = new Label();
             SuspendLayout();
+            // 
+            // ScoreLabel
+            // 
+            ScoreLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ScoreLabel.Location = new Point(0, 10);
+            ScoreLabel.Name = "ScoreLabel";
+            ScoreLabel.Size = new Size(544, 50);
+            ScoreLabel.TabIndex = 0;
+            ScoreLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(543, 450);
+            Controls.Add(ScoreLabel);
             Name = "GameForm";
-            Text = "Form1";
+            Text = "Game";
             Load += Form1_Load;
             KeyDown += GameForm_KeyDown;
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Label ScoreLabel;
     }
 }

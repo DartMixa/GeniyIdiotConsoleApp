@@ -8,14 +8,18 @@ using System.Windows.Forms;
 
 namespace _2048WinFormsApp
 {
-    internal class Gred
+    internal class Grid
     {
         public Label[,] grid;
         private int?[,] gridInt;
         private List<(int, int)> tempIndexList = [];
         private Random random = new Random();
         public int size;
-        public Gred(int GredSize, int sep, int ButtonSize)
+        public bool IsFreePlace() 
+        {
+            return tempIndexList.Count != 0;
+        }
+        public Grid(int GredSize, int sep, int ButtonSize)
         {
             grid = new Label[GredSize, GredSize];
             gridInt = new int?[GredSize, GredSize];

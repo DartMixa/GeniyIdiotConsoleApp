@@ -47,6 +47,7 @@
             ClientSize = new Size(543, 450);
             Controls.Add(ScoreLabel);
             Name = "GameForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Game";
             Load += Form1_Load;
             KeyDown += GameForm_KeyDown;

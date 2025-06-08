@@ -6,7 +6,7 @@ namespace _2048WinFormsApp
 {
     public partial class GameForm : Form
     {
-        private Gred gred;
+        private Grid grid;
         private int score = 0;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int Score
@@ -27,7 +27,7 @@ namespace _2048WinFormsApp
         {
             Score = 0;
             GenerateGrid(4);
-            gred.SetRandomPos(2);
+            grid.SetRandomPos(2);
             GeneratePosScoreLabel();
         }
         private void GeneratePosScoreLabel(int UpperMargin = 100)
@@ -37,13 +37,13 @@ namespace _2048WinFormsApp
         }
         private void GenerateGrid(int GredSize = 4, int sep = 20, int ButtonSize = 60, int UpperMargin = 100)
         {
-            gred = new Gred(GredSize, sep, ButtonSize);
+            grid = new Grid(GredSize, sep, ButtonSize);
             ClientSize = new Size(sep + GredSize * (ButtonSize + sep), UpperMargin + sep + GredSize * (ButtonSize + sep));
             for (int i = 0; i < GredSize; i++)
             {
                 for (int j = 0; j < GredSize; j++)
                 {
-                    Controls.Add(gred.grid[i, j]);
+                    Controls.Add(grid.grid[i, j]);
                 }
             }
         }
@@ -51,159 +51,168 @@ namespace _2048WinFormsApp
         {
             if (e.KeyCode == Keys.Up)
             {
-                for (int i = 0; i < gred.size; i++) 
+                for (int i = 0; i < grid.size; i++) 
                 {
-                    for (int j = 0; j < gred.size; j++)
+                    for (int j = 0; j < grid.size; j++)
                     {
-                        if (gred[i, j] is not null)
+                        if (grid[i, j] is not null)
                         {
                             for (int k = j - 1; k >= 0; k--)
                             {
-                                if (gred[i, k] is not null) 
+                                if (grid[i, k] is not null) 
                                 {
-                                    if (gred[i, k] == gred[i, j])
+                                    if (grid[i, k] == grid[i, j])
                                     {
-                                        gred[i, k] = gred[i, k] + gred[i, j];
-                                        gred[i, j] = null;
-                                        Score += (int)gred[i, k];
+                                        grid[i, k] = grid[i, k] + grid[i, j];
+                                        grid[i, j] = null;
+                                        Score += (int)grid[i, k];
                                     }
                                     else 
                                     {
-                                        gred[i, k + 1] = gred[i, j];
+                                        grid[i, k + 1] = grid[i, j];
                                         if (k + 1 != j)
                                         {
-                                            gred[i, j] = null;
+                                            grid[i, j] = null;
                                         }
                                     }
                                     break;
                                 }
                                 if (k == 0)
                                 {
-                                    gred[i, k] = gred[i, j];
-                                    gred[i, j] = null;
+                                    grid[i, k] = grid[i, j];
+                                    grid[i, j] = null;
                                 }
                             }
                         }
                     }
                 }
-                gred.SetRandomPos(2);
             }
             if (e.KeyCode == Keys.Down)
             {
-                for (int i = 0; i < gred.size; i++)
+                for (int i = 0; i < grid.size; i++)
                 {
-                    for (int j = gred.size - 1; j >= 0; j--)
+                    for (int j = grid.size - 1; j >= 0; j--)
                     {
-                        if (gred[i, j] is not null)
+                        if (grid[i, j] is not null)
                         {
-                            for (int k = j + 1; k < gred.size; k++)
+                            for (int k = j + 1; k < grid.size; k++)
                             {
-                                if (gred[i, k] is not null)
+                                if (grid[i, k] is not null)
                                 {
-                                    if (gred[i, k] == gred[i, j])
+                                    if (grid[i, k] == grid[i, j])
                                     {
-                                        gred[i, k] = gred[i, k] + gred[i, j];
-                                        gred[i, j] = null;
-                                        Score += (int)gred[i, k];
+                                        grid[i, k] = grid[i, k] + grid[i, j];
+                                        grid[i, j] = null;
+                                        Score += (int)grid[i, k];
                                     }
                                     else
                                     {
-                                        gred[i, k - 1] = gred[i, j];
+                                        grid[i, k - 1] = grid[i, j];
                                         if (k - 1 != j)
                                         {
-                                            gred[i, j] = null;
+                                            grid[i, j] = null;
                                         }
                                     }
                                     break;
                                 }
-                                if (k == gred.size - 1)
+                                if (k == grid.size - 1)
                                 {
-                                    gred[i, k] = gred[i, j];
-                                    gred[i, j] = null;
+                                    grid[i, k] = grid[i, j];
+                                    grid[i, j] = null;
                                 }
                             }
                         }
                     }
                 }
-                gred.SetRandomPos(2);
             }
             if (e.KeyCode == Keys.Right)
             {
-                for (int i = 0; i < gred.size; i++)
+                for (int i = 0; i < grid.size; i++)
                 {
-                    for (int j = gred.size - 1; j >= 0; j--)
+                    for (int j = grid.size - 1; j >= 0; j--)
                     {
-                        if (gred[j, i] is not null)
+                        if (grid[j, i] is not null)
                         {
-                            for (int k = j + 1; k < gred.size; k++)
+                            for (int k = j + 1; k < grid.size; k++)
                             {
-                                if (gred[k, i] is not null)
+                                if (grid[k, i] is not null)
                                 {
-                                    if (gred[k, i] == gred[j, i])
+                                    if (grid[k, i] == grid[j, i])
                                     {
-                                        gred[k, i] = gred[k, i] + gred[j, i];
-                                        gred[j, i] = null;
-                                        Score += (int)gred[k, i];
+                                        grid[k, i] = grid[k, i] + grid[j, i];
+                                        grid[j, i] = null;
+                                        Score += (int)grid[k, i];
                                     }
                                     else
                                     {
-                                        gred[k - 1, i] = gred[j, i];
+                                        grid[k - 1, i] = grid[j, i];
                                         if (k - 1 != j)
                                         {
-                                            gred[j, i] = null;
+                                            grid[j, i] = null;
                                         }
                                     }
                                     break;
                                 }
-                                if (k == gred.size - 1)
+                                if (k == grid.size - 1)
                                 {
-                                    gred[k, i] = gred[j, i];
-                                    gred[j, i] = null;
+                                    grid[k, i] = grid[j, i];
+                                    grid[j, i] = null;
                                 }
                             }
                         }
                     }
                 }
-                gred.SetRandomPos(2);
             }
             if (e.KeyCode == Keys.Left)
             {
-                for (int i = 0; i < gred.size; i++)
+                for (int i = 0; i < grid.size; i++)
                 {
-                    for (int j = 0; j < gred.size; j++)
+                    for (int j = 0; j < grid.size; j++)
                     {
-                        if (gred[j, i] is not null)
+                        if (grid[j, i] is not null)
                         {
                             for (int k = j - 1; k >= 0; k--)
                             {
-                                if (gred[k, i] is not null)
+                                if (grid[k, i] is not null)
                                 {
-                                    if (gred[k, i] == gred[j, i])
+                                    if (grid[k, i] == grid[j, i])
                                     {
-                                        gred[k, i] = gred[k, i] + gred[j, i];
-                                        gred[j, i] = null;
-                                        Score += (int)gred[k, i];
+                                        grid[k, i] = grid[k, i] + grid[j, i];
+                                        grid[j, i] = null;
+                                        Score += (int)grid[k, i];
                                     }
                                     else
                                     {
-                                        gred[k + 1, i] = gred[j, i];
+                                        grid[k + 1, i] = grid[j, i];
                                         if (k + 1 != j)
                                         {
-                                            gred[j, i] = null;
+                                            grid[j, i] = null;
                                         }
                                     }
                                     break;
                                 }
                                 if (k == 0)
                                 {
-                                    gred[k, i] = gred[j, i];
-                                    gred[j, i] = null;
+                                    grid[k, i] = grid[j, i];
+                                    grid[j, i] = null;
                                 }
                             }
                         }
                     }
                 }
-                gred.SetRandomPos(2);
+                
+            }
+            FillRandomCell();
+        }
+        private void FillRandomCell() 
+        {
+            if (grid.IsFreePlace())
+            {
+                grid.SetRandomPos(2);
+            }
+            else 
+            {
+                Close();
             }
         }
     }

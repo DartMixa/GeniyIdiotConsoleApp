@@ -17,12 +17,29 @@ namespace _2048WinFormsApp
             set 
             { 
                 score = value;
+                if (score > BestScore) 
+                {
+                    BestScore = score;
+                }
                 ScoreLabel.Text = "—чЄт: " + score.ToString();
             }
         }
-        public GameForm()
+        private int bestScore = 0;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int BestScore
+        {
+            get { return bestScore; }
+            set
+            {
+                bestScore = value;
+                FileSystem.WriteFile("bestResult.txt", bestScore.ToString());
+                BestScoreLabel.Text = "Ћучший –езультат: " + bestScore.ToString();
+            }
+        }
+        public GameForm(int bestScore)
         {
             InitializeComponent();
+            BestScore = bestScore;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -32,10 +49,13 @@ namespace _2048WinFormsApp
             grid.SetRandomPos(2);
             GeneratePosScoreLabel();
         }
-        private void GeneratePosScoreLabel(int UpperMargin = 100)
+        private void GeneratePosScoreLabel()
         {
             ScoreLabel.Size = new System.Drawing.Size(this.Size.Width, 50);
-            ScoreLabel.Location = new System.Drawing.Point(0, (UpperMargin - 50) / 2);
+            ScoreLabel.Location = new System.Drawing.Point(0, 0);
+
+            BestScoreLabel.Size = new System.Drawing.Size(this.Size.Width, 50);
+            BestScoreLabel.Location = new System.Drawing.Point(0, 50);
         }
         private void GenerateGrid(int GredSize = 4, int sep = 20, int ButtonSize = 60, int UpperMargin = 100)
         {

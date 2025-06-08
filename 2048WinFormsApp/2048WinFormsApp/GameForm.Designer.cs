@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             ScoreLabel = new Label();
+            BestScoreLabel = new Label();
             SuspendLayout();
             // 
             // ScoreLabel
@@ -40,11 +41,21 @@
             ScoreLabel.TabIndex = 0;
             ScoreLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // BestScoreLabel
+            // 
+            BestScoreLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            BestScoreLabel.Location = new Point(0, 60);
+            BestScoreLabel.Name = "BestScoreLabel";
+            BestScoreLabel.Size = new Size(544, 50);
+            BestScoreLabel.TabIndex = 1;
+            BestScoreLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(543, 450);
+            Controls.Add(BestScoreLabel);
             Controls.Add(ScoreLabel);
             Name = "GameForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -57,5 +68,6 @@
         #endregion
 
         private Label ScoreLabel;
+        private Label BestScoreLabel;
     }
 }

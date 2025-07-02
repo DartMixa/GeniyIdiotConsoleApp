@@ -1,0 +1,66 @@
+﻿namespace CatchMe2
+{
+    partial class MainForm
+    {
+        /// <summary>
+        ///  Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        ///  Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            UpdateTimer = new System.Windows.Forms.Timer(components);
+            SpawnTimer = new System.Windows.Forms.Timer(components);
+            SuspendLayout();
+            // 
+            // UpdateTimer
+            // 
+            UpdateTimer.Interval = 20;
+            UpdateTimer.Tick += Update;
+            // 
+            // SpawnTimer
+            // 
+            SpawnTimer.Enabled = true;
+            SpawnTimer.Interval = 250;
+            SpawnTimer.Tick += SpawnTimer_Tick;
+            // 
+            // MainForm
+            // 
+            AutoScaleDimensions = new SizeF(8F, 21F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(914, 630);
+            Font = new Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "MainForm";
+            Text = "Мячики 2";
+            Load += MainForm_Load;
+            MouseDown += MainForm_MouseDown;
+            ResumeLayout(false);
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Timer UpdateTimer;
+        private System.Windows.Forms.Timer SpawnTimer;
+    }
+}

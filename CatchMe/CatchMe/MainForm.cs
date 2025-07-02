@@ -40,7 +40,7 @@ namespace CatchMe
         {
             for (int i = 0; i < 10; i++)
             {
-                balls.Add(new RandomVelBoll(this));
+                balls.Add(new RandomVelBoll(balls, ClientSize.Width, ClientSize.Height));
             }
         }
 
@@ -60,7 +60,7 @@ namespace CatchMe
             while (i < balls.Count)
             {
                 var ball = balls[i];
-                if (!ball.IsOnForm())
+                if (!ball.IsOnForm(this))
                 {
                     ball.Kill();
                 }
@@ -70,7 +70,7 @@ namespace CatchMe
             {
 
                 ball.Go();
-                ball.Draw();
+                ball.Draw(bufferGraphics);
             }
 
             graphics.DrawImage(buffer, 0, 0);

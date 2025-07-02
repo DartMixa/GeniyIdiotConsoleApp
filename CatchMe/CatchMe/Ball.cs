@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,28 +15,29 @@ namespace CatchMe
         protected int y = 10;
         protected int size = 50;
         protected (int, int) vel = (10, 10);
-        
-        private MainForm form;
-        public Ball(MainForm form)
+
+        protected Brush brush = Brushes.Aqua;
+        public List<Ball> balls;
+        public Ball(List<Ball> balls) 
         {
-            this.form = form;
+            this.balls = balls;
         }
-        public void Draw()
+        public void Draw(Graphics graphics)
         {
-            var brush = Brushes.Aqua;
+            
             var rect = new Rectangle(x, y, size, size);
-            form.bufferGraphics.FillEllipse(brush, rect);
+            graphics.FillEllipse(brush, rect);
         }
-        public void Go()
+        public virtual void Go()
         {
             x += vel.Item1;
             y += vel.Item2;
         }
         public void Kill()
         {
-            form.balls.Remove(this);
+            balls.Remove(this);
         }
-        public bool IsOnForm() 
+        public bool IsOnForm(Form form) 
         {
             if (x + size < 0 | y + size < 0)
             {
@@ -46,6 +48,14 @@ namespace CatchMe
                 return false;
             }
             return true;
+        }
+        public bool PointCollision(int x, int y) 
+        {
+            if ((Math.Pow((this.x - x + size / 2), 2) + Math.Pow((this.y - y + size / 2), 2)) < Math.Pow(size / 2, 2))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

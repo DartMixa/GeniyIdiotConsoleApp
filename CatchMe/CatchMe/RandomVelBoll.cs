@@ -1,8 +1,8 @@
 ﻿namespace CatchMe
 {
-    class RandomVelBoll : RandomSizeAndPointBall 
+    public class RandomVelBoll : RandomSizeAndPointBall
     {
-        public RandomVelBoll(MainForm form) : base(form) 
+        public RandomVelBoll(List<Ball> balls, int witch, int height) : base(balls, witch, height)
         {
             int angle = random.Next(0, 360);
             double angleRad = angle * 2 * Math.PI / 360;

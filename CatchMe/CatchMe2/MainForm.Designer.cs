@@ -40,16 +40,21 @@
             // 
             // SpawnTimer
             // 
+            SpawnTimer.Enabled = true;
             SpawnTimer.Interval = 250;
             SpawnTimer.Tick += SpawnTimer_Tick;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 630);
+            Font = new Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "MainForm";
             Text = "Мячики 2";
+            Load += MainForm_Load;
+            MouseDown += MainForm_MouseDown;
             ResumeLayout(false);
         }
 

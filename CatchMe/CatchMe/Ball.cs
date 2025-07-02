@@ -16,6 +16,7 @@ namespace CatchMe
         protected int size = 50;
         protected (int, int) vel = (10, 10);
 
+        protected Brush brush = Brushes.Aqua;
         public List<Ball> balls;
         public Ball(List<Ball> balls) 
         {
@@ -23,11 +24,11 @@ namespace CatchMe
         }
         public void Draw(Graphics graphics)
         {
-            var brush = Brushes.Aqua;
+            
             var rect = new Rectangle(x, y, size, size);
             graphics.FillEllipse(brush, rect);
         }
-        public void Go()
+        public virtual void Go()
         {
             x += vel.Item1;
             y += vel.Item2;
@@ -47,6 +48,14 @@ namespace CatchMe
                 return false;
             }
             return true;
+        }
+        public bool PointCollision(int x, int y) 
+        {
+            if ((Math.Pow((this.x - x + size / 2), 2) + Math.Pow((this.y - y + size / 2), 2)) < Math.Pow(size / 2, 2))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

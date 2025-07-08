@@ -11,6 +11,7 @@ namespace FruitNinja
         public Graphics bufferGraphics;
         (int x, int y) ondMouseCord = (0, 0);
         (int x, int y) MouseCord = (0, 0);
+        private Counter lossCounter;
         public MainForm()
         {
             InitializeComponent();
@@ -26,6 +27,9 @@ namespace FruitNinja
             graphics = CreateGraphics();
             buffer = new(ClientSize.Width, ClientSize.Height);
             bufferGraphics = Graphics.FromImage(buffer);
+
+            var font = new Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lossCounter = new(10, 10, Brushes.Red, font, "Пропущено: ");
         }
 
         public void Clear()
@@ -43,6 +47,7 @@ namespace FruitNinja
                 if (!ball.IsOnForm(this))
                 {
                     ball.Kill();
+                    lossCounter.Add();
                 }
                 i++;
             }
@@ -63,7 +68,9 @@ namespace FruitNinja
                 }
                 i += 1;
             }
-            
+
+            lossCounter.Draw(bufferGraphics);
+
             //bufferGraphics.DrawLine(Pens.Black, new(MouseCord.x, MouseCord.y), new(ondMouseCord.x, ondMouseCord.y));
 
             ondMouseCord = MouseCord;

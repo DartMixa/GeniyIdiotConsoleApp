@@ -62,5 +62,25 @@ namespace Firework
                 balls.Add(ball);
             }
         }
+
+        private void rocketTimer_Tick(object sender, EventArgs e)
+        {
+            Random random = new();
+            rocketTimer.Interval = random.Next(600, 1000);
+            var ball = new RocketBall(balls, this);
+            balls.Add(ball);
+            ball.BoomEvent += Ball_BoomEvent;
+        }
+
+        private void Ball_BoomEvent(object sender, BoomEventArgs e)
+        {
+            Random random = new();
+            for (int i = 0; i < random.Next(5, 12); i++)
+            {
+                var ball = new FireworkBall(balls, e.cord.x, e.cord.y);
+                balls.Add(ball);
+            }
+            ((Ball)sender).Kill();
+        }
     }
 }

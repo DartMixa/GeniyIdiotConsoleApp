@@ -30,12 +30,19 @@
         {
             components = new System.ComponentModel.Container();
             UpdateTimer = new System.Windows.Forms.Timer(components);
+            rocketTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // UpdateTimer
             // 
             UpdateTimer.Interval = 20;
             UpdateTimer.Tick += Update;
+            // 
+            // rocketTimer
+            // 
+            rocketTimer.Enabled = true;
+            rocketTimer.Interval = 200;
+            rocketTimer.Tick += rocketTimer_Tick;
             // 
             // MainForm
             // 
@@ -51,5 +58,6 @@
         #endregion
 
         private System.Windows.Forms.Timer UpdateTimer;
+        private System.Windows.Forms.Timer rocketTimer;
     }
 }

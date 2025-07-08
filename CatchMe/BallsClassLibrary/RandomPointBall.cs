@@ -7,8 +7,8 @@ namespace BallsClassLibrary
         protected static Random random = new Random();
         public RandomPointBall(List<Ball> balls, int witch, int height) : base(balls)
         {
-            cord.x = random.Next(0, witch);
-            cord.y = random.Next(0, height);
+            cord.x = random.Next(radius, witch - radius);
+            cord.y = random.Next(radius, height - radius);
         }
     }
 }

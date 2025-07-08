@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,16 +14,16 @@ namespace BallsClassLibrary
     {
         public List<Ball> balls;
 
-        protected (int x, int y) cord = (10, 10);
+        public (int x, int y) cord = (10, 10);
         protected int radius = 25;
 
         protected Brush brush = Brushes.Aqua;
 
         private int speed = 10;
         private int angle = 0;
-        
-        private (int x, int y) vel = (10, 10);
+        private Vector2 vel = new(10, 10);
 
+        protected Vector2 Vel { get { return vel; } set { vel = value; } }
         protected int Speed {
             get { return speed; } 
             set 
@@ -52,8 +53,8 @@ namespace BallsClassLibrary
         }
         public virtual void Go()
         {
-            cord.x += vel.x;
-            cord.y += vel.y;
+            cord.x += (int)vel.X;
+            cord.y += (int)vel.Y;
         }
         public void Kill()
         {
@@ -82,7 +83,7 @@ namespace BallsClassLibrary
         private void UpdateVel()
         {
             double angleRad = Angle * 2 * Math.PI / 360;
-            vel = ((int)Math.Round(Speed * Math.Cos(angleRad)), (int)Math.Round(Speed * Math.Sin(angleRad)));
+            vel = new((int)Math.Round(Speed * Math.Cos(angleRad)), (int)Math.Round(Speed * Math.Sin(angleRad)));
         }
     }
 }

@@ -23,7 +23,16 @@ namespace BallsClassLibrary
         private int angle = 0;
         private Vector2 vel = new(10, 10);
 
-        protected Vector2 Vel { get { return vel; } set { vel = value; } }
+        protected static Random random = new Random();
+
+        protected Vector2 Vel { get { return vel; }
+            set 
+            { 
+                vel = value;
+                speed = (int)value.Length();
+                angle = (int)(Math.Atan2(value.Y, value.X) * 180 / Math.PI);
+            }
+        }
         protected int Speed {
             get { return speed; } 
             set 

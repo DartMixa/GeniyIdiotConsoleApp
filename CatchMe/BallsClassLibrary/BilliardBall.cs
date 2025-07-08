@@ -14,8 +14,12 @@ namespace BallsClassLibrary
         public event EventHandler<CollisionEventArgs> OnCollision;
         public BilliardBall(List<Ball> balls, int witch, int height, Form form) : base(balls, witch, height)
         {
+            OnCollision += BilliardBall_OnCollision;
             this.form = form;
         }
+
+        private void BilliardBall_OnCollision(object? sender, CollisionEventArgs e) {}
+
         public override void Go()
         {
             (int x, int y) newCord = (cord.x + (int)Vel.X, cord.y + (int)Vel.Y);
@@ -54,7 +58,7 @@ namespace BallsClassLibrary
 
             float dotProduct = Vector2.Dot(Vel, normal);
             Vector2 reflected = Vel - 2 * dotProduct * normal;
-            Angle = (int)(Math.Atan2(reflected.Y, reflected.X) * 180 / Math.PI);
+            Vel = reflected;
         }
         public void BallCollision(BilliardBall ball)
         {

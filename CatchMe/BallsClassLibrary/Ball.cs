@@ -65,7 +65,7 @@ namespace BallsClassLibrary
             cord.x += (int)vel.X;
             cord.y += (int)vel.Y;
         }
-        public void Kill()
+        public virtual void Kill()
         {
             balls.Remove(this);
         }

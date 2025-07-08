@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatchMe", "CatchMe\CatchMe.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatchMe2", "CatchMe2\CatchMe2.csproj", "{AF562E7E-29D9-4A43-A175-DA84C098186B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallsClassLibrary", "BallsClassLibrary\BallsClassLibrary.csproj", "{BA4B6845-5203-4681-AF8C-2007A8A9313D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillyardBalls", "BillyardBalls\BillyardBalls.csproj", "{446C4A01-DA2D-45B5-8A36-6C64D762476F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{AF562E7E-29D9-4A43-A175-DA84C098186B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF562E7E-29D9-4A43-A175-DA84C098186B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF562E7E-29D9-4A43-A175-DA84C098186B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4B6845-5203-4681-AF8C-2007A8A9313D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4B6845-5203-4681-AF8C-2007A8A9313D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4B6845-5203-4681-AF8C-2007A8A9313D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4B6845-5203-4681-AF8C-2007A8A9313D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{446C4A01-DA2D-45B5-8A36-6C64D762476F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{446C4A01-DA2D-45B5-8A36-6C64D762476F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{446C4A01-DA2D-45B5-8A36-6C64D762476F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{446C4A01-DA2D-45B5-8A36-6C64D762476F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

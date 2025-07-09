@@ -112,5 +112,7 @@ namespace BallsClassLibrary
 
             return distanceSquared <= radius * radius;
         }
+        public virtual void Slowdown() { }
+        public virtual void Boost() { }
     }
 }

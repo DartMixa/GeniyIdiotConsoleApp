@@ -17,5 +17,15 @@ namespace BallsClassLibrary
             brush = RandomBrush.Next();
             Acceleration = new(0, 1f);
         }
+        public override void Slowdown()
+        {
+            Vel = new(Vel.X / 2, Vel.Y / 2);
+            Acceleration = new(Acceleration.X / 3, Acceleration.Y / 3);
+        }
+        public override void Boost()
+        {
+            Vel = new(Vel.X * 2, Vel.Y * 2);
+            Acceleration = new(Acceleration.X * 3, Acceleration.Y * 3);
+        }
     }
 }

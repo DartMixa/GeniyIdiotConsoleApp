@@ -53,7 +53,6 @@ namespace FruitNinja
             }
             foreach (var ball in balls)
             {
-
                 ball.Go();
                 ball.Draw(bufferGraphics);
             }
@@ -64,6 +63,10 @@ namespace FruitNinja
                 var ball = balls[i];
                 if (ball.SegmentCollision(MouseCord, ondMouseCord))
                 {
+                    if (ball.GetType() == typeof(BombFruitBall))
+                    {
+                        Close();
+                    }
                     ball.Kill();
                 }
                 i += 1;
@@ -82,6 +85,12 @@ namespace FruitNinja
             for (int i = 0; i < 3; i++)
             {
                 var ball = new FruitBall(balls, this);
+                balls.Add(ball);
+            }
+            var random = new Random();
+            if (random.Next(0, 6) == 0) 
+            {
+                var ball = new BombFruitBall(balls, this);
                 balls.Add(ball);
             }
         }

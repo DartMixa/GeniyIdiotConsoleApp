@@ -18,4 +18,11 @@ namespace BallsClassLibrary
             Acceleration = new(0, 1f);
         }
     }
+    public class BombFruitBall : FruitBall
+    {
+        public BombFruitBall(List<Ball> balls, Form form) : base(balls, form)
+        {
+            brush = Brushes.Black;
+        }
+    }
 }

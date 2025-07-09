@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             UpdateTimer = new System.Windows.Forms.Timer(components);
             FruitSpawnTimer = new System.Windows.Forms.Timer(components);
+            SlowdownTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // UpdateTimer
@@ -43,6 +44,11 @@
             FruitSpawnTimer.Enabled = true;
             FruitSpawnTimer.Interval = 1500;
             FruitSpawnTimer.Tick += FruitSpawnTimer_Tick;
+            // 
+            // SlowdownTimer
+            // 
+            SlowdownTimer.Interval = 7000;
+            SlowdownTimer.Tick += SlowdownTimer_Tick;
             // 
             // MainForm
             // 
@@ -59,5 +65,6 @@
 
         private System.Windows.Forms.Timer UpdateTimer;
         private System.Windows.Forms.Timer FruitSpawnTimer;
+        private System.Windows.Forms.Timer SlowdownTimer;
     }
 }

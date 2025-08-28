@@ -94,5 +94,23 @@ namespace BallsClassLibrary
             double angleRad = Angle * 2 * Math.PI / 360;
             vel = new((int)Math.Round(Speed * Math.Cos(angleRad)), (int)Math.Round(Speed * Math.Sin(angleRad)));
         }
+        public bool SegmentCollision((int x, int y) cord1, (int x, int y) cord2) 
+        {
+            if (PointCollision(cord1.x, cord1.y) &&
+            PointCollision(cord2.x, cord2.y))
+            {
+                return true;
+            }
+            double dx = cord2.x - cord1.x;
+            double dy = cord2.y - cord1.y;
+            double segmentLengthSquared = dx * dx + dy * dy;
+            double t = ((cord.x - cord1.x) * dx + (cord.y - cord1.y) * dy) / segmentLengthSquared;
+            t = Math.Max(0, Math.Min(1, t));
+            var closestPoint = (x: cord1.x + t * dx, y: cord1.y + t * dy );
+            double distanceSquared = (closestPoint.x - cord.x) * (closestPoint.x - cord.x) +
+                               (closestPoint.y - cord.y) * (closestPoint.y - cord.y);
+
+            return distanceSquared <= radius * radius;
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
+using System.Timers;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace GeniyIdiotConsoleApp
@@ -8,6 +10,7 @@ namespace GeniyIdiotConsoleApp
     {
         static UsersResultStorage usersResultStorage = new();
         static QuestionsStorage questions;
+        static private int timerSecondCount;
         static void Main(string[] args)
         {
             usersResultStorage.Load();
@@ -58,6 +61,16 @@ namespace GeniyIdiotConsoleApp
                 }
             }
         }
+        static int? GetAnswerWithTimer()
+        {
+            bool isInput = Reader.TryReadLine(out string? input, 10000);
+            bool IsNumber = int.TryParse(input, out var answer);
+            if (isInput && IsNumber) 
+            {
+                return answer;
+            }
+            return null;
+        }
         static User Authorization()
         {
             Console.WriteLine("Здравствуйте, как вас зовут?");
@@ -66,23 +79,32 @@ namespace GeniyIdiotConsoleApp
         static void Game(User user)
         {
             Diagnose diagnose = new Diagnose();
+            timerSecondCount = 10;
+            System.Timers.Timer timer = new(1000);
+            timer.Elapsed += OnTimerElapsed;
+            timer.AutoReset = true;
 
             int i = 0;
             foreach (var question in questions)
             {
+                timer.Start();
                 i++;
+
                 Console.WriteLine("Вопрос №" + i);
+                Console.WriteLine("Таймер: " + timerSecondCount);
 
                 Console.WriteLine(question.question);
 
-                var userAnswer = GetAnswer();
+                var userAnswer = GetAnswerWithTimer();
 
                 var rightAnswer = question.answer;
 
-                if (userAnswer == rightAnswer)
+                if (userAnswer is not null && userAnswer == rightAnswer)
                 {
                     diagnose.countRightAnswers++;
                 }
+                timer.Stop();
+                timerSecondCount = 10;
             }
 
             diagnose.diagnose = DiagnoseCalculator.GetDiagnose(diagnose.countRightAnswers, questions.CountQuestions);
@@ -93,6 +115,18 @@ namespace GeniyIdiotConsoleApp
 
             usersResultStorage.AddDiagnose(user, diagnose);
             usersResultStorage.Save();
+        }
+        public static void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            timerSecondCount--;
+            if (timerSecondCount == 0)
+            {
+                timerSecondCount = 10;
+            }
+            var cursorPosition = Console.GetCursorPosition();
+            Console.SetCursorPosition(0, cursorPosition.Top - 2);
+            Console.WriteLine("Таймер: " + timerSecondCount + "     ");
+            Console.SetCursorPosition(cursorPosition.Left, cursorPosition.Top);
         }
         static void AddQuestion()
         {
@@ -121,6 +155,49 @@ namespace GeniyIdiotConsoleApp
             {
                 Console.WriteLine($"Не удалось удалить вопрос с номером {userChoice}");
             }
+        }
+    }
+    class Reader
+    {
+        private static Thread inputThread;
+        private static AutoResetEvent getInput, gotInput;
+        private static string input;
+        static Reader()
+        {
+            getInput = new AutoResetEvent(false);
+            gotInput = new AutoResetEvent(false);
+            inputThread = new Thread(reader);
+            inputThread.IsBackground = true;
+            inputThread.Start();
+        }
+        private static void reader()
+        {
+            while (true)
+            {
+                getInput.WaitOne();
+                input = Console.ReadLine();
+                gotInput.Set();
+            }
+        }
+        // omit the parameter to read a line without a timeout
+        public static string ReadLine(int timeOutMillisecs = Timeout.Infinite)
+        {
+            getInput.Set();
+            bool success = gotInput.WaitOne(timeOutMillisecs);
+            if (success)
+                return input;
+            else
+                throw new TimeoutException("User did not provide input within the timelimit.");
+        }
+        public static bool TryReadLine(out string? line, int timeOutMillisecs = Timeout.Infinite)
+        {
+            getInput.Set();
+            bool success = gotInput.WaitOne(timeOutMillisecs);
+            if (success)
+                line = input;
+            else
+                line = null;
+            return success;
         }
     }
 }
